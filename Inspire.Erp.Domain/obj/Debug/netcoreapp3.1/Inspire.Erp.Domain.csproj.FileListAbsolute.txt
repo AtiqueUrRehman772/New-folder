@@ -1,0 +1,13 @@
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.deps.json
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.runtimeconfig.json
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.runtimeconfig.dev.json
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.dll
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.pdb
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\obj\Debug\netcoreapp3.1\Inspire.Erp.Domain.csproj.AssemblyReference.cache
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\obj\Debug\netcoreapp3.1\Inspire.Erp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\obj\Debug\netcoreapp3.1\Inspire.Erp.Domain.AssemblyInfoInputs.cache
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\obj\Debug\netcoreapp3.1\Inspire.Erp.Domain.AssemblyInfo.cs
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\obj\Debug\netcoreapp3.1\Inspire.Erp.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\obj\Debug\netcoreapp3.1\Inspire.Erp.Domain.dll
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\obj\Debug\netcoreapp3.1\Inspire.Erp.Domain.pdb
+C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Domain\obj\Debug\netcoreapp3.1\Inspire.Erp.Domain.genruntimeconfig.cache
