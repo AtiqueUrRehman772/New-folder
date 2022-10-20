@@ -93,8 +93,8 @@ namespace Inspire.Erp.Web.Controllers
             return JsonConvert.SerializeObject(customerDS);
         }
 
-        [HttpGet("GetItemDetails")]
-        public async Task<string> GetItemDetails()
+        [HttpGet("getStockMovementRpt")]
+        public async Task<string> getStockMovementRpt()
         {
             try
             {
