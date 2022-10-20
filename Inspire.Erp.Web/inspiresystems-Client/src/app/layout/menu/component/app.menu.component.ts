@@ -252,7 +252,7 @@ export class AppMenuComponent implements OnInit {
             ]
           },
 
-          { label: 'Damage Entry', icon: 'fa fa-fw fa-wrench', routerLink: ['/utils'] },
+          { label: 'Damage Entry', icon: 'fa fa-fw fa-wrench', routerLink: ['/storewarehouse/demageentry'] },
           { label: 'Stock Adjustment', icon: 'fa fa-fw fa-gear', routerLink: ['/documentation'] },
           { label: 'Stock Transfer', icon: 'fa fa-fw fa-wrench', routerLink: ['/storewarehouse/stocktransfer'] },
           { label: 'Opening Stock', icon: 'fa fa-fw fa-gear', routerLink: ['/documentation'] },

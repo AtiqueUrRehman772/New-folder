@@ -86,7 +86,7 @@
             </div>
             <div class="p-col-12 p-md-12 p-lg-2">
                 <input id="item" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
-                <button pButton type="button" icon="pi pi-search"></button>
+                <button pButton type="button" icon="pi pi-search" (click)="GetItemList()"></button>
             </div>
             <div class="p-col-4 p-md-4 p-lg-1">
                 <input id="itemTree" type="checkbox" name="detailType" formControlName='ReceiptVoucherMasterDrAmount'
@@ -94,12 +94,12 @@
                 <label><b>Item Tree</b></label>
             </div>
             <div class="p-col-4 p-md-4 p-lg-1">
-                <input id="details" type="radio" name="detailType" formControlName='ReceiptVoucherMasterDrAmount'
+                <input id="details" type="radio" name="ReceiptVoucherMasterDrAmount" formControlName='ReceiptVoucherMasterDrAmount'
                     pInputRadio>
                 <label><b>Details</b></label>
             </div>
             <div class="p-col-4 p-md-4 p-lg-1">
-                <input id="summary" type="radio" name="detailType" formControlName='ReceiptVoucherMasterDrAmount'
+                <input id="summary" type="radio" name="ReceiptVoucherMasterDrAmount" formControlName='ReceiptVoucherMasterDrAmount'
                     pInputRadio>
                 <label><b>Summary</b></label>
             </div>
@@ -123,94 +123,82 @@
         </div>
     </p-panel>
 </div>
-<div class="card card-w-title" [formGroup]='receiptVoucherFormGroup'>
-    <p-tabView [activeIndex]="index" (onChange)="handleChange($event)">
-        <p-tabPanel [header]="'Format 1'| translate">
-            <div class="p-grid">
-                <div class="p-col-12 p-md-12 p-lg-3 mt-1" for="account">
-                    <b>{{'Stock In'| translate}}</b>
+
+<div class="p-grid">
+<div class="p-col-6">
+    <div class="card card-w-title" [formGroup]='receiptVoucherFormGroup'>
+        <p-tabView [activeIndex]="index" (onChange)="handleChange($event)">
+            <p-tabPanel [header]="'Format 1'| translate">
+                <div class="p-grid">
+    
+                    
+                    <div class="p-col-12 p-md-12 p-lg-1 mt-1" for="account">
+                        <b>{{'Stock In'| translate}}</b>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-2 mt-1" for="account">
+                        <b>{{'Open Qty'| translate}}</b>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-3">
+                        <input id="openQty" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-2 mt-1" for="account">
+                        <b>{{'Open Amount'| translate}}</b>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-2 mt-1">
+                        <input id="openAmount" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
+                    </div>
                 </div>
-                <div class="p-col-12 p-md-12 p-lg-1 mt-1" for="account">
-                    <b>{{'Open Qty'| translate}}</b>
+                <div class="grid">
+                    <hot-table [hotId]="hotid" [licenseKey]="licensekey" [settings]="receiptvoucherentry"></hot-table>
                 </div>
-                <div class="p-col-12 p-md-12 p-lg-2 mt-1">
-                    <input id="openQty" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</div>
+<div class="p-col-6">
+    <div class="card card-w-title" [formGroup]='receiptVoucherFormGroup'>
+        <p-tabView [activeIndex]="index" (onChange)="handleChange($event)">
+            <p-tabPanel [header]="'Format 1'| translate">
+                <div class="p-grid">
+                    
+                    <div class="p-col-12 p-md-12 p-lg-2 mt-1">
+                        <b>{{'Stock Out'| translate}}</b>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-2 mt-1">
+                        <b>{{'Close Qty'| translate}}</b>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-3 mt-1">
+                        <input id="openAmount" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
+                    </div>  
+                        <div class="p-col-12 p-md-12 p-lg-2 mt-1">
+                        <b>{{'Close Amount'| translate}}</b>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-2 mt-1">
+                        <input id="openAmount" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
+                    </div>
                 </div>
-                
-                <div class="p-col-12 p-md-12 p-lg-3 mt-1">
-                    <b>{{'Stock Out'| translate}}</b>
+                <div class="grid">
+                    <hot-table [hotId]="hotid" [licenseKey]="licensekey" [settings]="receiptvoucherentry"></hot-table>
                 </div>
-                <div class="p-col-12 p-md-12 p-lg-1 mt-1">
-                    <b>{{'Close Qty'| translate}}</b>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-2 mt-1">
-                    <input id="openAmount" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
-                </div>
-            </div>
-            <div class="p-grid">
-                <div class="p-col-12 p-md-12 p-lg-1 mt-1" for="account"></div>
-                <div class="p-col-12 p-md-12 p-lg-2 mt-1"></div>
-                <div class="p-col-12 p-md-12 p-lg-1 mt-1" for="account">
-                    <b>{{'Open Amount'| translate}}</b>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-2 mt-1">
-                    <input id="openAmount" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-1 mt-1" for="account"></div>
-                <div class="p-col-12 p-md-12 p-lg-2 mt-1"></div>
-                <div class="p-col-12 p-md-12 p-lg-1 mt-1">
-                    <b>{{'Close Amount'| translate}}</b>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-2 mt-1">
-                    <input id="openAmount" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
-                </div>
-            </div>
-            <div class="grid">
-                <hot-table [hotId]="hotid" [licenseKey]="licensekey" [settings]="receiptvoucherentry"></hot-table>
-            </div>
-        </p-tabPanel>
-        <p-tabPanel [header]="'Format 2'| translate">
-            <div class="p-grid">
-                <div class="p-col-12 p-md-12 p-lg-1 mt-1" for="account">
-                    <b>{{'Open Qty'| translate}}</b>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-4 mt-1">
-                    <input id="openQty" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-4 mt-1">
-                    <b>STOCK MOVEMENT</b>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-1 mt-1">
-                    <b>{{'Close Qty'| translate}}</b>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-2 mt-1">
-                    <input id="openAmount" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
-                </div>
-            </div>
-            <div class="p-grid">
-                <div class="p-col-12 p-md-12 p-lg-1 mt-1" for="account">
-                    <b>{{'Open Amount'| translate}}</b>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-2 mt-1">
-                    <input id="openAmount" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-3 mt-1" for="account"></div>
-                <div class="p-col-12 p-md-12 p-lg-3 mt-1"></div>
-                <div class="p-col-12 p-md-12 p-lg-1 mt-1">
-                    <b>{{'Close Amount'| translate}}</b>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-2 mt-1">
-                    <input id="openAmount" type="number" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
-                </div>
-            </div>
-        </p-tabPanel>
-    </p-tabView>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</div>
 </div>
 
-<p-dialog header="Receipt Voucher List" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '90%'}"
+
+
+
+
+
+
+
+
+
+<p-dialog header="Item List" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '90%'}"
     [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
 
-    <p-table #dt [value]="receiptVoucherarry" [columns]="cols" [paginator]="true" [rows]="10">
+    <p-table #dt [value]="dataset" [columns]="cols" [paginator]="true" [rows]="10">
         <ng-template pTemplate="caption">
             <div style="text-align: right">
                 <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
@@ -226,69 +214,17 @@
             </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-RcptVchr>
+        <ng-template pTemplate="body" let-item>
             <tr>
-                <td>{{RcptVchr.receiptVoucherMasterVoucherNo}}</td>
-                <td>{{RcptVchr.receiptVoucherMasterVoucherDate}}</td>
-                <td>{{RcptVchr.receiptVoucherMasterDrAcNo}}</td>
-                <td *ngIf='RcptVchr?.receiptVoucherMasterCurrencyId != null'>
-                    {{getCurrency(RcptVchr.receiptVoucherMasterCurrencyId)}}</td>
-                <td>{{RcptVchr.receiptVoucherMasterDbAmount}}</td>
-                <td>{{RcptVchr.receiptVoucherMasterCrAmount}}</td>
-                <td>{{RcptVchr.receiptVoucherMasterNarration}}</td>
-                <td>{{RcptVchr.receiptVoucherMasterDbAmount}}</td>
-                <td>{{RcptVchr.receiptVoucherMasterCrAmount}}</td>
-                <td>
-                    <button pButton type="button" icon="pi pi-pencil"
-                        (click)='GetSavedReceiptDetails(RcptVchr.receiptVoucherMasterVoucherNo);displayMaximizable=false;'
-                        class="ui-button-info"></button>
-                </td>
+                <td>{{item.Item_Master_Item_ID}}</td>
+                <td><a href="javascript:void(0)" (click)="GetItemDetails(item.Item_Master_Item_ID)">{{item.Item_Master_Item_Name}}</a></td>
+                <td>{{item.Item_Master_Part_No}}</td>
+                <td>{{item.Item_Master_Barcode}}</td>
             </tr>
         </ng-template>
     </p-table>
 
 </p-dialog>
-
-<!-- <p-dialog header="Receipt Voucher List" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '90%'}"
-    [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-    <p-table #dt [value]="receiptVoucherarry" [columns]="cols"  [paginator]="true"  [rows]="10">
-        <ng-template pTemplate="caption">
-            <div style="text-align: right">        
-                <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
-                <input type="text" pInputText size="50" placeholder="Global Filter" 
-                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr >
-                    <th *ngFor="let col of cols" [pSortableColumn]="col.field" >{{col.header|translate}}
-                            <p-sortIcon [field]="col.field"></p-sortIcon>   
-                    </th>
-              </tr>
-    </ng-template>
-    
-        <ng-template pTemplate="body" let-pymtVchr>
-            <tr>
-                <td>{{pymtVchr.ReceiptVoucherMasterVoucherNo}}</td>
-                <td>{{pymtVchr.ReceiptVoucherMasterVoucherDate}}</td>
-                <td>{{pymtVchr.ReceiptVoucherMasterDrAcNo}}</td>
-                <td>{{getCurrency(pymtVchr.ReceiptVoucherMasterCurrencyId)}}</td>
-                <td>{{pymtVchr.ReceiptVoucherMasterDbAmount}}</td>
-                <td>{{pymtVchr.ReceiptVoucherMasterCrAmount}}</td>
-                <td>{{pymtVchr.ReceiptVoucherMasterNarration}}</td>
-                <td>{{pymtVchr.ReceiptVoucherMasterDbAmount}}</td>
-                <td>{{pymtVchr.ReceiptVoucherMasterCrAmount}}</td>
-                <td> 
-                    <button pButton type="button" icon="pi pi-pencil"
-                        (click)='GetSavedReceiptDetails(pymtVchr.ReceiptVoucherMasterVoucherNo);displayMaximizable=false;'
-                        class="ui-button-info"></button>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-
-</p-dialog> -->
-
 <p-toast></p-toast>
 
 <p-confirmDialog key="confirm-key" acceptLabel="Yes" rejectLabel="No" header="Confirm"

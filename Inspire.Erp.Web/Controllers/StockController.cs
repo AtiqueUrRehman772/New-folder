@@ -119,5 +119,26 @@ namespace Inspire.Erp.Web.Controllers
                 throw;
             }
         }
+        [HttpPost("getStockMovementDetailsRpt")]
+        public async Task<string> getStockMovementDetailsRpt([FromBody] ItemMasterViewModel id)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(conn);
+                string query = @"select * from Stock_Register where Stock_Register_Material_ID="+id.ItemMasterItemId+"";
+                SqlCommand com = new SqlCommand(query, con);
+                con.Open();
+                SqlDataAdapter customerDA = new SqlDataAdapter();
+                customerDA.SelectCommand = com;
+                DataSet customerDS = new DataSet();
+                customerDA.Fill(customerDS, "ItemDetails");
+                con.Close();
+                return JsonConvert.SerializeObject(customerDS);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
     }
 }

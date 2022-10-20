@@ -22,9 +22,10 @@ import { StockAgeingReportComponent } from './stock-ageing-report/stock-ageing-r
 import { ItemWiseProfitReportComponent } from './item-wise-profit-report/item-wise-profit-report.component';
 import {ListboxModule} from 'primeng/listbox';
 import { StockTransferComponent } from './stock-transfer/stock-transfer.component';
+import { DemageentryComponent } from './demageentry/demageentry.component';
 
 @NgModule({
-  declarations: [StockLedgerReportComponent, StockmovementreportComponent, StockLedgerComponent, StockReportComponent, StockReportBaseUnitComponent, StockMovementComponent, StockAdjustmentReportComponent, RecorderLevelReportComponent, BOMStatusComponent, IssueReportComponent, InvoiceProfitReportComponent, StockAgeingReportComponent, ItemWiseProfitReportComponent, StockTransferComponent],
+  declarations: [StockLedgerReportComponent, StockmovementreportComponent, StockLedgerComponent, StockReportComponent, StockReportBaseUnitComponent, StockMovementComponent, StockAdjustmentReportComponent, RecorderLevelReportComponent, BOMStatusComponent, IssueReportComponent, InvoiceProfitReportComponent, StockAgeingReportComponent, ItemWiseProfitReportComponent, StockTransferComponent, DemageentryComponent],
   imports: [
     CommonModule,
     StorewarehouseRoutingModule,

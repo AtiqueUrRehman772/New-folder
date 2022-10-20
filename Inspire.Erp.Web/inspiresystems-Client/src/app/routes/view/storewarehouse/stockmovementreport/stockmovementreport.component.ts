@@ -15,7 +15,7 @@ import { AccountsTransactions } from 'src/app/routes/domain/AccountsTransactions
 import { HotTableRegisterer } from '@handsontable/angular';
 import { summaryFileName } from '@angular/compiler/src/aot/util';
 import { DropDownValidator } from 'src/app/shared/validator/customvalidtor';
-
+import {StockApiService} from '../../../service/stock-api/stock-api.service';
 @Component({
   selector: 'app-stockmovementreport',
   templateUrl: './stockmovementreport.component.html',
@@ -54,6 +54,7 @@ export class StockmovementreportComponent implements OnInit {
   private hotRegisterer = new HotTableRegisterer();
   hotid = 'receiptVouchrEntry';
   constructor(private activatedroute: ActivatedRoute,
+    private service:StockApiService,
     private messageService: MessageService,
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
@@ -67,19 +68,36 @@ export class StockmovementreportComponent implements OnInit {
   receiptvoucherentry: Handsontable.GridSettings;
   receiptVoucherFormGroup: FormGroup;
   // accountTransactionDataset = [];
-
+dataset:[];
+list:any;
+  GetItemList(){
+    this.service.getStockMovementRpt().subscribe(respose=>{
+      this.list=respose;
+      this.dataset=this.list.ItemDetails;
+      this.displayMaximizable=true;
+    },
+    error=>{
+      console.error("Data Not found...!");
+    });
+  }
+  GetItemDetails(id){
+    this.displayMaximizable=false;
+    this.service.getStockMovementDetailsRpt({ItemMasterItemId:id}).subscribe(respose=>{
+      this.list=respose;
+      this.dataset=this.list.ItemDetails;
+      console.error(this.dataset);
+    },
+    error=>{
+      console.error("Data Not found...!");
+    });  
+  }
   cols: any;
   ngOnInit(): void {
     this.cols = [
-      { field: 'ReceiptVoucherMasterVoucherNo', header: 'Voucher No' },
-      { field: 'ReceiptVoucherMasterVoucherDate', header: 'Date' },
-      { field: 'ReceiptVoucherMasterDrAcNo', header: 'Account' },
-      { field: 'ReceiptVoucherMasterCurrencyId', header: 'Currency' },
-      { field: 'ReceiptVoucherMasterDrAmount', header: 'Vchr.Debit' },
-      { field: 'ReceiptVoucherMasterCrAmount', header: 'Vchr.Credit' },
-      { field: 'ReceiptVoucherMasterNarration', header: 'Particulars' },
-      { field: 'ReceiptVoucherMasterDrAmount', header: 'Dtls.Debit' },
-      { field: 'ReceiptVoucherMasterCrAmount', header: 'Dtls.Credit' }
+      { field: 'Item_Master_Item_ID', header: 'Item Id' },
+      { field: 'Item_Master_Item_Name', header: 'Item Name' },
+      { field: 'Item_Master_Part_No', header: 'Item Part No' },
+      { field: 'Item_Master_Barcode', header: 'Item Barcode' }
     ];
 
     this.btnFlag = { edit: false, cancel: false, save: true, update: false, delete: false };
