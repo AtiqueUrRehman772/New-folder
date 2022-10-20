@@ -12,6 +12,7 @@ import { AccountApiService } from 'src/app/routes/service/account.api.service';
 import { StockApiService } from 'src/app/routes/service/stock-api/stock-api.service';
 import { interval } from 'rxjs';
 import * as $ from 'jquery';
+import { MasterApiService } from 'src/app/routes/service/master.api.services';
 type SheetData = any[][];
 
 @Component({
@@ -28,8 +29,8 @@ export class StockLedgerReportComponent implements OnInit {
     private translate: TranslateService,
     private messageService: MessageService,
     private confirmation: ConfirmationService,
-    private stockApi: StockApiService,
-    private accountapi: AccountApiService) {
+    private masterApi: MasterApiService,
+    private stockApi: StockApiService) {
     this.licensekey = defaults.hotlicensekey;
     this.gridHeader = "No Data";
     this.btnFlag = { edit: true, cancel: true, save: true, new: true, delete: true, list: false };
@@ -54,33 +55,45 @@ export class StockLedgerReportComponent implements OnInit {
   SoutAmount = [];
   BalQty = [];
   BalAmount = [];
+  locationList:any;
+  jobList:any;
+  brandList:any;
   title: string;
   dataset: any;
   payload: any;
   subtitle: string;
   gridHeader:string;
   displayMaximizable: boolean;
-  showItempGroupList:boolean;
-  itemGroupList:Array<item>;
+  itemGroupList:any;
+  showItemGroupList:boolean;
+  showItemList:boolean;
+  showLocationList:boolean;
+  showJobList:boolean;
+  showBrandList:boolean;
+  itemList:any;
   selectedItem:item;
   breadcumbmodel: MenuItem[];
   btnlabel: string = 'Submit';
-  cols: any;
   dataJson: string;
   data: SheetData;
   wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = '';
   ItemFormGroup: FormGroup;
   licensekey: string;
-
+  cols:Array<any>;
+  jobCols:Array<any>;
+  brandCols:Array<any>;
+  tempResponse:any;
 
   ngOnInit(): void {
+    this.showLocationList = false;
+    this.showJobList = false;
+    this.showBrandList = false;
     this.breadcumbmodel = this.router.url.slice(1).split('/').map((k) => ({ label: k }));
     this.activatedroute.data.subscribe(data => {
       this.title = data.title;
       this.subtitle = data.title;
     });
-    this.cols = [];
     this.initializeControls();
     this.ItemFormGroup = new FormGroup({
       ItemGroup: new FormControl('', Validators.required),
@@ -93,10 +106,24 @@ export class StockLedgerReportComponent implements OnInit {
       Job: new FormControl('', Validators.required),
       DetailsType: new FormControl('Details', Validators.required),
       DateType: new FormControl('Monthly', Validators.required)
-    })
+    });
+    this.cols=[
+      {field:"Item_Master_Item_ID",header:"Item Code"},
+      {field:"Item_Master_Item_Name",header:"Item Name"},
+      {field:"Item_Master_Bar_Code",header:"Bar Code"},
+      {field:"Item_Master_Part_No",header:"Part No."},
+      {field:"Item_Master_Stock",header:"Stock"},
+    ];
+    this.jobCols=[
+      {field:"Name",header:"Job Name"},
+      {field:"JobNumber",header:"Job No."}
+    ];
+    this.brandCols=[
+      {field:"Name",header:"Brand Name"}
+    ]
   }
   showItemGroups(){
-    this.showItempGroupList = true;
+    this.showItemGroupList = true;
     this.itemGroupList = [
       {itemId:'851',itemName:'Diesel'},
       {itemId:'311',itemName:'Garnet'},
@@ -104,11 +131,24 @@ export class StockLedgerReportComponent implements OnInit {
       {itemId:'472',itemName:'Paints'}
     ];
   }
+  showItems(){
+    this.stockApi.getAllItemsList().subscribe(
+      data=>{
+        this.tempResponse = data;
+        this.itemList = this.tempResponse.Item_Master;
+      }
+    );
+    this.showItemList = true;
+  }
   toggleActive(itemId){
-    console.log('Item Id is : ');
-    console.log(itemId);
     this.itemGroupList.forEach(element => {
       $("#"+element.itemId).removeClass('selected');
+    });
+    $("#"+itemId).addClass('selected');
+  }
+  toggleActiveLoc(itemId){
+    this.locationList.forEach(element => {
+      $("#"+element.locationMasterLocationId).removeClass('selected');
     });
     $("#"+itemId).addClass('selected');
   }
@@ -130,7 +170,6 @@ export class StockLedgerReportComponent implements OnInit {
       data => {
         this.response = data;
         this.dataset = this.response.Stock_Register;
-        this.getAllItemId(this.response.Stock_Register);
         this.gridHeader = "Showing All Data";
       }, (error) => {
         console.log(error);
@@ -149,14 +188,10 @@ export class StockLedgerReportComponent implements OnInit {
       detailsType: this.ItemFormGroup.value.DetailsType,
       dateType: this.ItemFormGroup.value.DateType,
     };
-    console.log('Payload : ');
-    console.log(this.payload);
     this.stockApi.getFilteredStockLedgerRpt(this.payload).subscribe(
       data => {
         this.response = data;
         this.dataset = this.response.Stock_Register;
-        console.log(this.response);
-        this.getAllItemId(this.response.Stock_Register);
         this.gridHeader = "Showing Filtered Data";
       }, (error) => {
         console.log(error);
@@ -179,54 +214,57 @@ export class StockLedgerReportComponent implements OnInit {
       }
     });
   }
-  getAllItemId(data: any) {
-    this.itemIds = [];
-    for (let i = 0; i < data.length; i++) {
-      this.itemIds.push(data[i].Item_Id);
-    }
+  getAllLocations(){
+    this.masterApi.GetAllLocation().subscribe(
+      data =>{
+        this.locationList = data;
+        console.log(this.locationList);
+        this.showLocationList = true;
+      }
+    );
   }
-  getAllItemNames(data: any) {
-    this.itemNames = [];
-    for (let i = 0; i < data.length; i++) {
-      this.itemNames.push(data[i].Item_Id);
-    }
+  getAllJobs(){
+    this.masterApi.GetAllJob().subscribe(
+      data =>{
+        this.jobList = data;
+        console.log(this.jobList);
+        this.showJobList = true;
+      }
+    );
   }
-  getAllUnits(data: any) {
-    this.units = [];
-    for (let i = 0; i < data.length; i++) {
-      this.units.push(data[i].Item_Id);
-    }
-  }
-  getOpenQty(data: any) {
-    this.openQty = [];
-    for (let i = 0; i < data.length; i++) {
-      this.openQty.push(data[i].Item_Id);
-    }
+  getAllBrands(){
+    this.masterApi.GetAllBrand().subscribe(
+      data =>{
+        this.brandList = data;
+        console.log(this.brandList);
+        this.showBrandList = true;
+      }
+    );
   }
 
-  onFileChange(evt: any) {
-    this.exceltoJsonConverter(evt);
-    // /* wire up file reader */
-    // const target: DataTransfer = <DataTransfer>(evt.target);
-    // if (target.files.length !== 1) throw new Error('Cannot use multiple files');
-    // const reader: FileReader = new FileReader();
-    // reader.onload = (e: any) => {
-    //   /* read workbook */
-    //   const bstr: string = e.target.result;
-    //   const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+  // onFileChange(evt: any) {
+  //   this.exceltoJsonConverter(evt);
+  //   // /* wire up file reader */
+  //   // const target: DataTransfer = <DataTransfer>(evt.target);
+  //   // if (target.files.length !== 1) throw new Error('Cannot use multiple files');
+  //   // const reader: FileReader = new FileReader();
+  //   // reader.onload = (e: any) => {
+  //   //   /* read workbook */
+  //   //   const bstr: string = e.target.result;
+  //   //   const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
 
-    //   /* grab first sheet */
-    //   const wsname: string = wb.SheetNames[0];
-    //   const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+  //   //   /* grab first sheet */
+  //   //   const wsname: string = wb.SheetNames[0];
+  //   //   const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
-    //   /* save data */
-    //   this.data = <SheetData>(XLSX.utils.sheet_to_json(ws, { header: 1 }));
-    //   console.log(this.data);
-    //   //this.dataJson = JSON.stringify(this.data);
-    //   //console.log(this.dataJson);
-    // };
-    // reader.readAsBinaryString(target.files[0]);
-  }
+  //   //   /* save data */
+  //   //   this.data = <SheetData>(XLSX.utils.sheet_to_json(ws, { header: 1 }));
+  //   //   console.log(this.data);
+  //   //   //this.dataJson = JSON.stringify(this.data);
+  //   //   //console.log(this.dataJson);
+  //   // };
+  //   // reader.readAsBinaryString(target.files[0]);
+  // }
 
 
   hotid = 'stockLedgerReport';
@@ -375,58 +413,57 @@ export class StockLedgerReportComponent implements OnInit {
     /* save to file */
     XLSX.writeFile(wb, this.fileName);
   }
-
   exceltoJson = { sheet1: {} };
   exceltoarray: Array<string> = [];
 
-  exceltoJsonConverter(event: any) {
-    this.exceltoJson = { sheet1: {} };
-    let headerJson = {};
-    /* wire up file reader */
-    const target: DataTransfer = <DataTransfer>(event.target);
-    // if (target.files.length !== 1) {
-    //   throw new Error('Cannot use multiple files');
-    // }
-    const reader: FileReader = new FileReader();
-    reader.readAsBinaryString(target.files[0]);
-    console.log("filename", target.files[0].name);
-    this.exceltoJson['filename'] = target.files[0].name;
-    reader.onload = (e: any) => {
-      /* create workbook */
-      const binarystr: string = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
-      for (var i = 0; i < wb.SheetNames.length; ++i) {
-        const wsname: string = wb.SheetNames[i];
-        const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-        const data = XLSX.utils.sheet_to_json(ws); // to get 2d array pass 2nd parameter as object {header: 1}
-        this.exceltoJson[`sheet${i + 1}`] = data;
-        this.exceltoarray.push[`sheet${i + 1}`] = data.toString();
-        const headers = this.get_header_row(ws);
-        headerJson[`header${i + 1}`] = headers;
-        this.cols.push(headers);
-        //  console.log("json",headers);
-      }
-      this.exceltoJson['headers'] = headerJson;
-      console.log(this.cols);
-    };
-  }
+  // exceltoJsonConverter(event: any) {
+  //   this.exceltoJson = { sheet1: {} };
+  //   let headerJson = {};
+  //   /* wire up file reader */
+  //   const target: DataTransfer = <DataTransfer>(event.target);
+  //   // if (target.files.length !== 1) {
+  //   //   throw new Error('Cannot use multiple files');
+  //   // }
+  //   const reader: FileReader = new FileReader();
+  //   reader.readAsBinaryString(target.files[0]);
+  //   console.log("filename", target.files[0].name);
+  //   this.exceltoJson['filename'] = target.files[0].name;
+  //   reader.onload = (e: any) => {
+  //     /* create workbook */
+  //     const binarystr: string = e.target.result;
+  //     const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
+  //     for (var i = 0; i < wb.SheetNames.length; ++i) {
+  //       const wsname: string = wb.SheetNames[i];
+  //       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+  //       const data = XLSX.utils.sheet_to_json(ws); // to get 2d array pass 2nd parameter as object {header: 1}
+  //       this.exceltoJson[`sheet${i + 1}`] = data;
+  //       this.exceltoarray.push[`sheet${i + 1}`] = data.toString();
+  //       const headers = this.get_header_row(ws);
+  //       headerJson[`header${i + 1}`] = headers;
+  //       this.cols.push(headers);
+  //       //  console.log("json",headers);
+  //     }
+  //     this.exceltoJson['headers'] = headerJson;
+  //     console.log(this.cols);
+  //   };
+  // }
 
-  get_header_row(sheet) {
-    var headers = [];
-    var range = XLSX.utils.decode_range(sheet['!ref']);
-    var C, R = range.s.r; /* start in the first row */
-    /* walk every column in the range */
-    for (C = range.s.c; C <= range.e.c; ++C) {
-      var cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })] /* find the cell in the first row */
-      // console.log("cell",cell)
-      var hdr = "UNKNOWN " + C; // <-- replace with your desired default 
-      if (cell && cell.t) {
-        hdr = XLSX.utils.format_cell(cell);
-        headers.push(hdr);
-      }
-    }
-    return headers;
-  }
+  // get_header_row(sheet) {
+  //   var headers = [];
+  //   var range = XLSX.utils.decode_range(sheet['!ref']);
+  //   var C, R = range.s.r; /* start in the first row */
+  //   /* walk every column in the range */
+  //   for (C = range.s.c; C <= range.e.c; ++C) {
+  //     var cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })] /* find the cell in the first row */
+  //     // console.log("cell",cell)
+  //     var hdr = "UNKNOWN " + C; // <-- replace with your desired default 
+  //     if (cell && cell.t) {
+  //       hdr = XLSX.utils.format_cell(cell);
+  //       headers.push(hdr);
+  //     }
+  //   }
+  //   return headers;
+  // }
   // new() {
   //   this.stockLedgerFormGroup.reset();
   //   this.stockLedgerReport.data = [];

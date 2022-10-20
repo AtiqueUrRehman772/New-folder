@@ -14,7 +14,6 @@ import { InvoiceProfitReportComponent } from './invoice-profit-report/invoice-pr
 import { StockAgeingReportComponent } from './stock-ageing-report/stock-ageing-report.component';
 import { ItemWiseProfitReportComponent } from './item-wise-profit-report/item-wise-profit-report.component';
 import { StockTransferComponent } from './stock-transfer/stock-transfer.component';
-import { DemageEntryComponent } from './demage-entry/demage-entry.component';
 
 const routes: Routes = [
   {
@@ -83,12 +82,7 @@ const routes: Routes = [
     data: { title: 'Item Wise Profit Report', titleI18n: 'Item Wise Profit Report' },
   },
   {
-    path: 'DemageEntryComponent',
-    component: DemageEntryComponent,
-    data: { title: 'Demage Entry', titleI18n: 'Demage Entry' },
-  },
-  {
-    path: 'StockTransferComponent',
+    path: 'stocktransfer',
     component: StockTransferComponent,
     data: { title: 'Stock Transfer', titleI18n: 'Stock Transfer' },
   }

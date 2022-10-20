@@ -5,40 +5,28 @@
 </div>
 <p-toolbar>
     <div class="ui-toolbar-group-left">
-        <label pButton type="button" label="New" icon="pi pi-plus" class="mr-1" style="margin-right: 3px;">
+        <!-- <label pButton type="button" label="New" icon="pi pi-plus" class="mr-1" style="margin-right: 3px;">
             <input type="file" (change)="onFileChange($event)" hidden>
-        </label>
+        </label> -->
         <button pButton type="button" [disabled]="btnFlag.edit" label="Edit" icon="fa fa-pencil"
             class="ui-button-success"></button>
-
         <button pButton type="button" [disabled]="btnFlag.cancel" class="ui-button-danger" label="Cancel"
             (click)="onCancel()" icon="fa fa-ban"></button>
         <button pButton type="button" icon="fa fa-floppy-o" [disabled]="btnFlag.save" class="ui-button-success"
             (click)="saveStockLedgerReport()" label="Save"></button>
-
-        <!-- <button pButton type="button" label="Find" icon="fa fa-search"></button> -->
         <button pButton type="button" [disabled]="btnFlag.list" label="List" icon="fa fa-list" class="ui-button-info"
             (click)="getStockLedgerRpt()"></button>
-
         <button pButton type="button" [disabled]="btnFlag.delete" class="ui-button-danger" label="Delete"
             icon="fa fa-trash"></button>
     </div>
-
     <div class="ui-toolbar-group-right">
-        <!-- <button pButton type="button" icon="pi pi-search"></button>
-            <button pButton type="button" icon="pi pi-calendar" class="ui-button-success"></button>
-            <button pButton type="button" icon="pi pi-times" class="ui-button-danger"></button> -->
         <div style="display: inline-block;" class="ui-inputgroup">
-
             <input type="text" pInputText placeholder="Search">
             <button pButton type="button" icon="pi pi-search"></button>
         </div>
-
         <button pButton type="button" label="Print" [disabled]="btnFlag.save" icon="fa fa-print"
             class="ui-button-success"></button>
-
         <button pButton type="button" label="Exit" icon="fa fa-sign-out"></button>
-
         <p-checkbox label="Suppress Allocation in Print"></p-checkbox>
     </div>
 </p-toolbar>
@@ -76,7 +64,7 @@
                 <div class="p-col-2 p-md-2">
                     <div style="display: inline-block;" class="ui-inputgroup">
                         <input pInputText formControlName="Brand" id="brand">
-                        <button pButton type="button" icon="pi pi-search"></button>
+                        <button pButton type="button" icon="pi pi-search" (click)="getAllBrands()"></button>
                     </div>
                     <div class="error" *ngIf="f.Brand.touched && f.Brand.invalid">
                         <span>Brand is Mandatory Field*</span>
@@ -88,7 +76,7 @@
                 <div class="p-col-6 p-md-12 p-lg-2 p-1">
                     <div style="display: inline-block;" class="ui-inputgroup">
                         <input pInputText formControlName="ItemName" id="itemName">
-                        <button pButton type="button" icon="pi pi-search"></button>
+                        <button pButton type="button" icon="pi pi-search" (click)="showItems()"></button>
                     </div>
                     <div class="error" *ngIf="f.ItemName.touched && f.ItemName.invalid">
                         <span>Item Name is Mandatory Field*</span>
@@ -98,7 +86,7 @@
                 <div class="p-col-6 p-md-12 p-lg-2 p-1">
                     <div style="display: inline-block;" class="ui-inputgroup">
                         <input pInputText formControlName="Location" id="location">
-                        <button pButton type="button" icon="pi pi-search"></button>
+                        <button pButton type="button" icon="pi pi-search" (click)="getAllLocations()"></button>
                     </div>
                     <div class="error" *ngIf="f.Location.touched && f.Location.invalid">
                         <span>Location is Mandatory Field*</span>
@@ -108,7 +96,7 @@
                 <div class="p-col-6 p-md-12 p-lg-2 p-1">
                     <div style="display: inline-block;" class="ui-inputgroup">
                         <input pInputText formControlName="Job" id="job">
-                        <button pButton type="button" icon="pi pi-search"></button>
+                        <button pButton type="button" icon="pi pi-search" (click)="getAllJobs()"></button>
                     </div>
                     <div class="error" *ngIf="f.Job.touched && f.Job.invalid">
                         <span>Job is Mandatory Field*</span>
@@ -169,8 +157,8 @@
         </div>
     </p-panel>
 </div>
-<p-dialog header="Item Groups" [(visible)]="showItempGroupList" [modal]="true" [style]="{width: '25%'}" [maximizable]="true"
-    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<p-dialog header="Item Groups" [(visible)]="showItemGroupList" [modal]="true" [style]="{width: '25%'}"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
     <p-toolbar>
         <div class="ui-toolbar-group-left">
             <button pButton type="button" label="Show" icon="fa fa-search" class="ui-button-success"></button>
@@ -181,13 +169,146 @@
     </p-toolbar>
     <div class="card">
         <div class="p-grid p-2">
-            <input [style]="{'width':'100%','margin':'5px 2px 5px 2px'}" pInputText type="text" placeholder="Type to Search" />
+            <input [style]="{'width':'100%','margin':'5px 2px 5px 2px'}" pInputText type="text"
+                placeholder="Type to Search" />
         </div>
         <div class="card">
             <span *ngFor="let item of itemGroupList" (click)="toggleActive(item.itemId)">
-            <div class="customListHover" id="{{item.itemId}}"><label>{{item.itemName}}</label></div>
-        </span>
+                <div class="customListHover" id="{{item.itemId}}"><label>{{item.itemName}}</label></div>
+            </span>
         </div>
+    </div>
+</p-dialog>
+<p-dialog header="Locations" [(visible)]="showLocationList" [modal]="true" [style]="{width: '25%'}"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="Show" icon="fa fa-search" class="ui-button-success"></button>
+            <button pButton type="button" label="Ok" icon="fa fa-check" class="ui-button-info"></button>
+            <button pButton type="button" label="Add" icon="fa fa-plus" class="ui-button-info"></button>
+            <button pButton type="button" class="ui-button-danger" label="Exit" icon="fa fa-sign-out"></button>
+        </div>
+    </p-toolbar>
+    <div class="card">
+        <div class="p-grid p-2">
+            <input [style]="{'width':'100%','margin':'5px 2px 5px 2px'}" pInputText type="text"
+                placeholder="Type to Search" />
+        </div>
+        <div class="card">
+            <span *ngFor="let item of locationList" (click)="toggleActiveLoc(item.locationMasterLocationId)">
+                <div class="customListHover" id="{{item.locationMasterLocationId}}"><label>{{item.locationMasterLocationName}}</label></div>
+            </span>
+        </div>
+    </div>
+</p-dialog>
+<p-dialog header="Locations" [(visible)]="showJobList" [modal]="true" [style]="{width: '40%'}"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="Show" icon="fa fa-search" class="ui-button-success"></button>
+            <button pButton type="button" label="Ok" icon="fa fa-check" class="ui-button-info"></button>
+            <button pButton type="button" label="Add" icon="fa fa-plus" class="ui-button-info"></button>
+            <button pButton type="button" class="ui-button-danger" label="Exit" icon="fa fa-sign-out"></button>
+        </div>
+    </p-toolbar>
+    <div class="card">
+        <p-table #dt [value]="jobList" [columns]="jobCols" [paginator]="true" [rows]="10">
+            <ng-template pTemplate="caption">
+                <div style="text-align: right">
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Global Filter"
+                        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th *ngFor="let col of jobCols" [pSortableColumn]="col.field">{{col.header|translate}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td>{{item.jobMasterJobName}}</td>
+                    <td>{{item.jobMasterJobNumber}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-dialog>
+<p-dialog header="Locations" [(visible)]="showBrandList" [modal]="true" [style]="{width: '40%'}"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="Show" icon="fa fa-search" class="ui-button-success"></button>
+            <button pButton type="button" label="Ok" icon="fa fa-check" class="ui-button-info"></button>
+            <button pButton type="button" label="Add" icon="fa fa-plus" class="ui-button-info"></button>
+            <button pButton type="button" class="ui-button-danger" label="Exit" icon="fa fa-sign-out"></button>
+        </div>
+    </p-toolbar>
+    <div class="card">
+        <p-table #dt [value]="brandList" [columns]="brandCols" [paginator]="true" [rows]="10">
+            <ng-template pTemplate="caption">
+                <div style="text-align: right">
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Global Filter"
+                        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th *ngFor="let col of brandCols" [pSortableColumn]="col.field">{{col.header|translate}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td>{{item.jobMasterJobName}}</td>
+                    <td>{{item.jobMasterJobNumber}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-dialog>
+<p-dialog header="Items" [(visible)]="showItemList" [modal]="true" [style]="{width: '90%'}" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="Show" icon="fa fa-search" class="ui-button-success"></button>
+            <button pButton type="button" label="Ok" icon="fa fa-check" class="ui-button-info"></button>
+            <button pButton type="button" label="Add" icon="fa fa-plus" class="ui-button-info"></button>
+        </div>
+    </p-toolbar>
+    <div class="card">
+        <p-table #dt [value]="itemList" [columns]="cols" [paginator]="true" [rows]="10">
+            <ng-template pTemplate="caption">
+                <div style="text-align: right">
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Global Filter"
+                        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th *ngFor="let col of cols" [pSortableColumn]="col.field">{{col.header|translate}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td>{{item.Item_Master_Item_ID}}</td>
+                    <td>{{item.Item_Master_Item_Name}}</td>
+                    <td>{{item.Item_Master_Barcode}}</td>
+                    <td>{{item.Item_Master_Part_No}}</td>
+                    <td>{{item.Stock}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </p-dialog>
 <p-toast></p-toast>

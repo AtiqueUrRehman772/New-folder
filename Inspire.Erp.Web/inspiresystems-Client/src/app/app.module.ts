@@ -20,6 +20,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PrimeModuleModule } from './shared/module/prime-module/prime-module.module';
 import { MessageService, ConfirmationService } from 'primeng/api';
+
 // Application services
 export function TranslateHttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');

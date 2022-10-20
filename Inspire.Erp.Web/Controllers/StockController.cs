@@ -24,7 +24,6 @@ namespace Inspire.Erp.Web.Controllers
             conn = configuration.GetConnectionString("db_con");
             this.context = context;
         }
-
         [HttpPost("getStockLedgerReport")]
         public async Task<string> getStockLedgerReport()
         {
@@ -92,6 +91,33 @@ namespace Inspire.Erp.Web.Controllers
             customerDA.Fill(customerDS, "Stock_Register");
             con.Close();
             return JsonConvert.SerializeObject(customerDS);
+        }
+
+        [HttpGet("GetItemDetails")]
+        public async Task<string> GetItemDetails()
+        {
+            try
+            {
+
+                SqlConnection con = new SqlConnection(conn);
+                string query = @"select Item_Master_Item_ID,Item_Master_Part_No,Item_Master_Barcode,ISNULL(SUM(Stock_Register_SIN)-SUM(Stock_Register_Sout),0)as Stock,Item_Master_Item_Name
+                             from Item_Master
+                             Left outer
+                             join Stock_Register  on Item_Master.Item_Master_Item_ID = Stock_Register.Stock_Register_Material_ID
+                             group by Item_Master_Item_ID,Item_Master_Part_No,Item_Master_Barcode,Item_Master_Item_Name";
+                SqlCommand com = new SqlCommand(query, con);
+                con.Open();
+                SqlDataAdapter customerDA = new SqlDataAdapter();
+                customerDA.SelectCommand = com;
+                DataSet customerDS = new DataSet();
+                customerDA.Fill(customerDS, "ItemDetails");
+                con.Close();
+                return JsonConvert.SerializeObject(customerDS);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
         }
     }
 }
