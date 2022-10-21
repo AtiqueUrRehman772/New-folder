@@ -302,7 +302,9 @@
             <ng-template pTemplate="body" let-item>
                 <tr>
                     <td>{{item.Item_Master_Item_ID}}</td>
-                    <td>{{item.Item_Master_Item_Name}}</td>
+                    <td [style]="{'cursor':'pointer'}"
+                     (click)="getDetailsByItem(item.Item_Master_Item_ID)">
+                     {{item.Item_Master_Item_Name}}</td>
                     <td>{{item.Item_Master_Barcode}}</td>
                     <td>{{item.Item_Master_Part_No}}</td>
                     <td>{{item.Stock}}</td>

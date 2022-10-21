@@ -241,7 +241,29 @@ export class StockLedgerReportComponent implements OnInit {
       }
     );
   }
-
+  getDetailsByItem(item_Id:any){
+    this.btnFlag = { edit: false, cancel: false, save: false, new: false, delete: false, list: false };
+    this.payload = {
+      itemGroup: new String(item_Id),
+      itemName: this.ItemFormGroup.value.ItemName,
+      dateFrom: this.ItemFormGroup.value.DateFrom,
+      dateTo: this.ItemFormGroup.value.DateTo,
+      brand: this.ItemFormGroup.value.Brand,
+      location: this.ItemFormGroup.value.Location,
+      job: this.ItemFormGroup.value.Job,
+      detailsType: this.ItemFormGroup.value.DetailsType,
+      dateType: this.ItemFormGroup.value.DateType,
+    };
+    this.stockApi.getDetailsByItem(this.payload).subscribe(
+      data => {
+        this.response = data;
+        this.dataset = this.response.Stock_Register;
+        this.gridHeader = "Showing Filtered Data";
+        this.showItemList = false;
+      }, (error) => {
+        console.log(error);
+      });
+  }
   // onFileChange(evt: any) {
   //   this.exceltoJsonConverter(evt);
   //   // /* wire up file reader */

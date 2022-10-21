@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from '../app.component';
+import { DamageEntryComponent } from './view/damage-entry/damage-entry.component';
 import { DashboardComponent } from './view/dashboard/dashboard.component';
 
 const routes: Routes = [
@@ -9,8 +10,6 @@ const routes: Routes = [
     component: DashboardComponent,
     data: { title: 'Dashboard', titleI18n: 'dashboard' },
   },
-
-
   {
     path: 'master',
     loadChildren: () => import('./view/master/master.module').then(ma => ma.MasterModule)
@@ -45,6 +44,11 @@ const routes: Routes = [
     path: 'storewarehouse',
     loadChildren: () => import('./view/storewarehouse/storewarehouse.module').then(se => se.StorewarehouseModule)
 
+  },
+  {
+    path: 'damageentry',
+    component: DamageEntryComponent,
+    data: { title: 'Damge Entry', titleI18n: 'damageEntry' },
   },
   { path: '**', redirectTo: '' },
 ];

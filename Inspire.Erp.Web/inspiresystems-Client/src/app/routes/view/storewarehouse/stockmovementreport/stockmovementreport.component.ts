@@ -15,7 +15,8 @@ import { AccountsTransactions } from 'src/app/routes/domain/AccountsTransactions
 import { HotTableRegisterer } from '@handsontable/angular';
 import { summaryFileName } from '@angular/compiler/src/aot/util';
 import { DropDownValidator } from 'src/app/shared/validator/customvalidtor';
-import {StockApiService} from '../../../service/stock-api/stock-api.service';
+import { StockApiService } from 'src/app/routes/service/stock-api/stock-api.service';
+
 @Component({
   selector: 'app-stockmovementreport',
   templateUrl: './stockmovementreport.component.html',
@@ -23,6 +24,8 @@ import {StockApiService} from '../../../service/stock-api/stock-api.service';
 })
 export class StockmovementreportComponent implements OnInit {
 
+  dataset:[];
+list:any;
   confirmDropDatabaseDialogVisible = false;
   title: string;
   search: string;
@@ -49,7 +52,6 @@ export class StockmovementreportComponent implements OnInit {
 
   accountTransactionList: AccountsTransactions[] = [];
   receiptVoucherarry: ReceiptVoucher[] = [];
-  // savedPaymentVoucherGridData: GridData[] = [];
   savedReceiptVoucher: ReceiptVoucher;
   private hotRegisterer = new HotTableRegisterer();
   hotid = 'receiptVouchrEntry';
@@ -65,15 +67,41 @@ export class StockmovementreportComponent implements OnInit {
     this.licensekey = defaults.hotlicensekey;
   }
 
-  receiptvoucherentry: Handsontable.GridSettings;
-  receiptVoucherFormGroup: FormGroup;
-  // accountTransactionDataset = [];
-dataset:[];
-list:any;
+  stockmovementrpt: Handsontable.GridSettings;
+  stockMovementRptFormGroup: FormGroup;
+
+  cols: any;
+  ngOnInit(): void {
+    this.cols = [
+      { field: 'Item_Master_Item_ID', header: 'Item Id' },
+      { field: 'Item_Master_Item_Name', header: 'Item Name' },
+      { field: 'Item_Master_Part_No', header: 'Item Part No' },
+      { field: 'Item_Master_Barcode', header: 'Item Barcode' }
+    ];
+
+    this.btnFlag = { edit: false, cancel: false, save: true, update: false, delete: false };
+    this.initializeControls();
+    this.stockMovementRptFormGroup = this.fb.group({
+      ReceiptVoucherMasterSNO: [null],
+      ReceiptVoucherMasterVoucherNo: [{ value: null, disabled: true }],
+      ReceiptVoucherMasterVoucherDate: [null, [Validators.required]],
+      ReceiptVoucherMasterRefNo: ['', [Validators.required]],
+      ReceiptVoucherMasterDrAcNo: [-1, [DropDownValidator]],
+      ReceiptVoucherMasterDrAmount: [null],
+      ReceiptVoucherMasterNarration: ['', [Validators.required]],
+      ReceiptVoucherMasterCurrencyId: [-1, [DropDownValidator]]
+    });
+    this.breadcumbmodel = this.router.url.slice(1).split('/').map((k) => ({ label: k }));
+    this.activatedroute.data.subscribe(data => {
+      this.title = data.title;
+    });
+  }
   GetItemList(){
-    this.service.getStockMovementRpt().subscribe(respose=>{
+    console.log('called');
+    this.service.getAllItemsList().subscribe(respose=>{
       this.list=respose;
-      this.dataset=this.list.ItemDetails;
+      console.log(this.list);
+      this.dataset=this.list.Item_Master;
       this.displayMaximizable=true;
     },
     error=>{
@@ -91,59 +119,14 @@ list:any;
       console.error("Data Not found...!");
     });  
   }
-  cols: any;
-  ngOnInit(): void {
-    this.cols = [
-      { field: 'Item_Master_Item_ID', header: 'Item Id' },
-      { field: 'Item_Master_Item_Name', header: 'Item Name' },
-      { field: 'Item_Master_Part_No', header: 'Item Part No' },
-      { field: 'Item_Master_Barcode', header: 'Item Barcode' }
-    ];
-
-    this.btnFlag = { edit: false, cancel: false, save: true, update: false, delete: false };
-    this.initializeControls();
-    this.receiptVoucherFormGroup = this.fb.group({
-      // receiptVoucherSno: [null],
-      // receiptVoucherVoucherNo: [{ value: null, disabled: true }],
-      // receiptVoucherDate: [null],
-      // receiptVoucherVoucherRef: [''],
-      // receiptVoucherCrAcNo: [-1],
-      // receiptVoucherCrAmount: [null],
-      // receiptVoucherDbAmount: [null],
-      // receiptVoucherNarration: [''],
-      // receiptVoucherCurreReceiptVoucherMasterVoucherDatencyId: [-1],
-
-      ReceiptVoucherMasterSNO: [null],
-      ReceiptVoucherMasterVoucherNo: [{ value: null, disabled: true }],
-      ReceiptVoucherMasterVoucherDate: [null, [Validators.required]],
-      ReceiptVoucherMasterRefNo: ['', [Validators.required]],
-      ReceiptVoucherMasterDrAcNo: [-1, [DropDownValidator]],
-      ReceiptVoucherMasterDrAmount: [null],
-      ReceiptVoucherMasterNarration: ['', [Validators.required]],
-      ReceiptVoucherMasterCurrencyId: [-1, [DropDownValidator]]
-    });
-    this.breadcumbmodel = this.router.url.slice(1).split('/').map((k) => ({ label: k }));
-    this.activatedroute.data.subscribe(data => {
-      this.title = data.title;
-    });
+  handleChange(e) {
+    this.index = e.index;
   }
-  public getCurrency(id): string {
-    return this.currencyList?.find(k => k.value === id).label;
-  }
-
-
   get f() {
-    return this.receiptVoucherFormGroup.controls;
+    return this.stockMovementRptFormGroup.controls;
   }
-
   initializeControls() {
-    this.getAllJobs();
-    this.getAllCostCenter();
-    this.getAllAccount();
-    this.getAllCurrency();
-    this.getAllReceiptVouchrs();
-    // this.getAllAccountTransaction();
-    this.receiptvoucherentry = {
+    this.stockmovementrpt = {
       rowHeaders: true,
       viewportColumnRenderingOffset: 27,
       viewportRowRenderingOffset: 'auto',
@@ -241,11 +224,11 @@ list:any;
       dropdownMenu: true,
     };
 
-    this.receiptvoucherentry.beforeChangeRender = (change, source) => {
+    this.stockmovementrpt.beforeChangeRender = (change, source) => {
       this.ColumnSum();
 
     };
-    this.receiptvoucherentry.afterRemoveRow = (index: number, amount: number) => {
+    this.stockmovementrpt.afterRemoveRow = (index: number, amount: number) => {
       // console.log('beforeRemove: index: %d, amount: %d', index, amount);
       // console.log(this.hotRegisterer.getInstance(this.hotid).getDataAtRow(index));
       this.ColumnSum();
@@ -253,7 +236,7 @@ list:any;
     };
 
 
-    this.receiptvoucherentry.afterValidate = (isValid, value, row, prop) => {
+    this.stockmovementrpt.afterValidate = (isValid, value, row, prop) => {
       if (!isValid) {
         this.messageService.add({ severity: 'error', summary: 'Alert', detail: 'Invalid entry' });
       }
@@ -264,347 +247,13 @@ list:any;
 
   }
   ColumnSum() {
-    if (this.receiptvoucherentry.data.length > 0) {
-      const sum1 = this.receiptvoucherentry.data.filter(item => item.hasOwnProperty('credit'))
+    if (this.stockmovementrpt.data.length > 0) {
+      const sum1 = this.stockmovementrpt.data.filter(item => item.hasOwnProperty('credit'))
         .reduce((sum, current) => sum + current.credit, 0);
-      this.receiptVoucherFormGroup.controls.ReceiptVoucherMasterDrAmount.setValue(sum1);
+      this.stockMovementRptFormGroup.controls.ReceiptVoucherMasterDrAmount.setValue(sum1);
     }
-  }
-
-
-
-  getAllCurrency() {
-    this.masterapi.GetAllCurrency().subscribe(k => {
-      this.currencyList = k.map((kl) => ({ label: kl.currencyMasterCurrencyName, value: kl.currencyMasterCurrencyId }));
-      this.currencyList.unshift({ label: '--Select--', value: -1 });
-      this.currArry = k.map(ar => ar.currencyMasterCurrencyName.trim());
-    });
-  }
-  getAllJobs() {
-    this.masterapi.GetAllJob().subscribe(k => {
-      this.jobArray = k;
-      this.jobList = k.map((kl) => ({ label: kl.jobMasterJobName, value: kl.jobMasterId }));
-      this.jobArry = k.map(ar => ar.jobMasterJobName.trim());
-    });
-  }
-
-  getAllCostCenter() {
-    this.masterapi.GetAllCostCenter().subscribe(k => {
-      this.costcenterArray = k;
-      this.costcenterList = k.map((kl) => ({ label: kl.costCenterMasterCostCenterName, value: kl.costCenterMasterCostCenterId }));
-      this.costcenterArry = k.map(ar => ar.costCenterMasterCostCenterName.trim());
-    });
-  }
-
-  getAllAccount() {
-    this.accountapi.GetAllAcounts().subscribe(k => {
-      this.accountArray = k.result;
-      this.accountList = k.result.filter(v => v.masterAccountsTableRelativeNo.trim() === 'AS11')
-        .map((kl) => ({ label: kl.masterAccountsTableAccName, value: kl.masterAccountsTableAccNo }));
-      this.accountList.unshift({ label: '--Select--', value: -1 });
-      this.acctArry = k.result.map(ar => ar.masterAccountsTableAccName.trim() + '|' + ar.masterAccountsTableAccNo);
-    });
-  }
-
-  saveReceiptVoucher() {
-    let deletedGridData: ReceiptVoucherDetails[] = [];
-    let deletedAccountTrans: AccountsTransactions[] = [];
-    const savedData: Array<GridData> = this.receiptvoucherentry.data.filter(k => k.hasOwnProperty('account'));
-    const RcptVoucher: ReceiptVoucher = this.receiptVoucherFormGroup.value as ReceiptVoucher;
-    RcptVoucher.receiptVoucherMasterVoucherNo = this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterVoucherNo;
-    RcptVoucher.receiptVoucherMasterSno = this.receiptVoucherFormGroup.value.ReceiptVoucherMasterSNO;
-    RcptVoucher.receiptVoucherMasterDrAmount = this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterDrAmount;
-    RcptVoucher.receiptVoucherMasterFcDrAmount = this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterDrAmount;
-    RcptVoucher.receiptVoucherMasterFsno = 1;
-    RcptVoucher.receiptVoucherMasterUserId = 1;
-    RcptVoucher.receiptVoucherMasterAllocId = 0;
-    RcptVoucher.receiptVoucherMasterVoucherDate = this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterVoucherDate;
-    RcptVoucher.receiptVoucherMasterVoucherType = '';
-    RcptVoucher.receiptVoucherMasterDrAcNo = this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterDrAcNo;
-    RcptVoucher.receiptVoucherMasterCrAmount = 0;
-    RcptVoucher.receiptVoucherMasterFcCrAmount = 0;
-    RcptVoucher.receiptVoucherMasterNarration = this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterNarration;
-    RcptVoucher.receiptVoucherMasterRefNo = this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterRefNo;
-    RcptVoucher.receiptVoucherMasterCurrencyId = this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterCurrencyId;
-
-    RcptVoucher.receiptVoucherDetails = savedData.filter(k => k.account != null
-      && k.credit != null)
-      .map((k: GridData) => {
-        return {
-          receiptVoucherDetailsId: k.id != null ? k.id : 0,
-          receiptVoucherDetailsVoucherNo: this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterVoucherNo,
-          receiptVoucherDetailsSlNo: 0,
-          receiptVoucherDetailsCrAcNo: k.account.trim().split('|')[1],
-          receiptVoucherDetailsCrAmount: k.credit,
-          receiptVoucherDetailsFcCrAmount: k.credit,
-          receiptVoucherDetailsDbAmount: 0,
-          receiptVoucherDetailsJobId: k.jobname != null && k.jobname !== '' ? this.jobArray
-            .find(j => j.jobMasterJobName.trim() === k.jobname.trim()).jobMasterId : null,
-          receiptVoucherDetailsDepId: 0,
-          receiptVoucherDetailsNarration: k.narration,
-          receiptVoucherDetailsFsno: 0,
-          receiptVoucherDetailsDelStatus: false
-
-        };
-      });
-    if (this.btnFlag.update) {
-      deletedGridData = this.savedReceiptVoucher.receiptVoucherDetails.filter((k) => {
-        if (!(RcptVoucher.receiptVoucherDetails
-          .some(l => l.receiptVoucherDetailsId === k.receiptVoucherDetailsId))) {
-          k.receiptVoucherDetailsDelStatus = true;
-          return k;
-        }
-      });
-      if (deletedGridData.length > 0) {
-        RcptVoucher.receiptVoucherDetails.push(...deletedGridData);
-      }
-
-    }
-    RcptVoucher.accountsTransactions = [];
-    const debitData: AccountsTransactions = {
-      accountsTransactionsAccNo: this.f.ReceiptVoucherMasterDrAcNo.value,
-      accountsTransactionsTransDate: this.f.ReceiptVoucherMasterVoucherDate.value,
-      accountsTransactionsParticulars: this.f.ReceiptVoucherMasterNarration.value,
-      accountsTransactionsCredit: this.f.ReceiptVoucherMasterDrAmount.value,
-      accountsTransactionsFcCredit: this.f.ReceiptVoucherMasterDrAmount.value,
-      accountsTransactionsVoucherType: null,
-      accountsTransactionsTstamp: new Date(),
-      accountsTransactionsVoucherNo: this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterVoucherNo,
-      accountsTransactionsDescription: this.f.ReceiptVoucherMasterNarration.value,
-      accountsTransactionsStatus: null,
-      accountstransactionsDelStatus: false
-    };
-    RcptVoucher.accountsTransactions.push(debitData);
-    // console.log('RcpVcher Details',RcptVoucher.receiptVoucherDetails)
-    // console.log('RcptVoucher-receiptVoucherDetails',RcptVoucher.receiptVoucherDetails.
-    // filter(x => x.ReceiptVoucherDetailsDelStatus === false));
-    RcptVoucher.receiptVoucherDetails.filter(x => x.receiptVoucherDetailsDelStatus === false)
-      .forEach(element => {
-        const creditData: AccountsTransactions = {
-          accountsTransactionsAccNo: element.receiptVoucherDetailsCrAcNo,
-          accountsTransactionsTransDate: this.f.receiptVoucherMasterVoucherDate.value,
-          accountsTransactionsParticulars: element.receiptVoucherDetailsNarration,
-          accountsTransactionsDebit: element.receiptVoucherDetailsCrAmount,
-          accountsTransactionsFcDebit: element.receiptVoucherDetailsCrAmount,
-          accountsTransactionsVoucherType: null,
-          accountsTransactionsTstamp: new Date(),
-          accountsTransactionsVoucherNo: element.receiptVoucherDetailsVoucherNo,
-          accountsTransactionsDescription: element.receiptVoucherDetailsNarration,
-          accountsTransactionsStatus: null,
-          accountstransactionsDelStatus: false
-        };
-        RcptVoucher.accountsTransactions.push(creditData);
-      });
-    // console.log('RcptVoucher',RcptVoucher);
-    if (this.btnFlag.save) {
-      this.saveVoucher(RcptVoucher);
-    } else {
-      RcptVoucher.accountsTransactions.filter(x => x.accountsTransactionsDebit > 0)
-        .forEach((element, index, arry) => {
-          const acctTransEntry: AccountsTransactions = this.savedReceiptVoucher.accountsTransactions
-            .filter(x => x.accountsTransactionsDebit > 0)
-            .find(kl => kl.accountsTransactionsVoucherNo === arry[index].accountsTransactionsVoucherNo
-              && kl.accountsTransactionsAccNo === arry[index].accountsTransactionsAccNo
-            );
-          if (acctTransEntry) {
-            arry[index].accountsTransactionsTransSno = acctTransEntry.accountsTransactionsTransSno;
-            arry[index].accountsTransactionsStatus = acctTransEntry.accountsTransactionsStatus;
-            arry[index].accountsTransactionsVoucherType = acctTransEntry.accountsTransactionsVoucherType;
-          }
-
-        });
-
-
-      RcptVoucher.accountsTransactions.filter(x => x.accountsTransactionsCredit > 0)
-        .forEach((element, index, arry) => {
-          const acctTransEntry: AccountsTransactions = this.savedReceiptVoucher.accountsTransactions
-            .filter(x => x.accountsTransactionsCredit > 0)
-            .find(kl => kl.accountsTransactionsVoucherNo === arry[index].accountsTransactionsVoucherNo
-              && kl.accountsTransactionsAccNo === arry[index].accountsTransactionsAccNo
-            );
-          if (acctTransEntry) {
-            arry[index].accountsTransactionsTransSno = acctTransEntry.accountsTransactionsTransSno;
-            arry[index].accountsTransactionsStatus = acctTransEntry.accountsTransactionsStatus;
-            arry[index].accountsTransactionsVoucherType = acctTransEntry.accountsTransactionsVoucherType;
-          }
-
-        });
-
-      deletedAccountTrans = this.savedReceiptVoucher.accountsTransactions
-        .filter((k) => {
-          if (!(RcptVoucher.accountsTransactions.filter(x => x.accountsTransactionsTransSno > 0)
-            .some(l => l.accountsTransactionsTransSno
-              === k.accountsTransactionsTransSno
-            ))) {
-            k.accountstransactionsDelStatus = true;
-            return k;
-          }
-        });
-      if (deletedAccountTrans.length > 0) {
-        RcptVoucher.accountsTransactions.push(...deletedAccountTrans);
-      }
-      this.updateVoucher(RcptVoucher);
-    }
-  }
-  saveVoucher(RcptVoucher: ReceiptVoucher) {
-    this.confirmation.confirm({
-      key: 'confirm-key',
-      message: 'Do you want to save voucher?',
-      accept: () => {
-        this.accountapi.InsertReceiptVoucher(RcptVoucher).subscribe((data) => {
-          this.btnFlag = { edit: true, cancel: false, save: false, update: true, delete: true };
-          this.updateFormGrid(data.result);
-          this.messageService.add({ severity: 'success', summary: 'Alert', detail: 'Receipt Voucher Saved Succesfully' });
-        }, (err) => {
-          this.messageService.add({ severity: 'error', summary: 'Alert', detail: 'Receipt Voucher Save Failed' });
-        });
-      }
-    });
-  }
-  updateVoucher(RcptVoucher: ReceiptVoucher) {
-    this.confirmation.confirm({
-      key: 'confirm-key',
-      message: 'Do you want to update existing voucher?',
-      accept: () => {
-        this.accountapi.UpdateReceiptVoucher(RcptVoucher).subscribe((data) => {
-          this.btnFlag = { edit: true, cancel: false, save: false, update: true, delete: true };
-          this.updateFormGrid(data.result);
-          this.messageService.add({ severity: 'success', summary: 'Alert', detail: 'Receipt Voucher Updated Succesfully' });
-        }, (err) => {
-          this.messageService.add({ severity: 'error', summary: 'Alert', detail: 'Receipt Voucher Update Failed' });
-        });
-      }
-    });
-  }
-  getAllAccountTransaction() {
-    this.accountapi.GetAllAcountTransactions().subscribe((data) => {
-      this.accountTransactionList = data.result;
-    });
-  }
-
-  getAllReceiptVouchrs() {
-    this.accountapi.GetReceiptVouchers().subscribe((data) => {
-      this.receiptVoucherarry = data.result;
-    });
-  }
-
-  public getAccountName(acctnumber: string): string {
-    return this.accountArray
-      .find(j => j.masterAccountsTableAccNo.trim() === acctnumber.trim()).masterAccountsTableAccName;
-  }
-
-  new() {
-    this.receiptVoucherFormGroup.reset();
-    this.receiptvoucherentry.data = [];
-    this.receiptvoucherentry.readOnly = false;
-    this.hotRegisterer.getInstance(this.hotid).updateSettings(this.receiptvoucherentry);
-
-    this.accountTransactionList = [];
-    this.receiptVoucherFormGroup.get('ReceiptVoucherMasterSNO').setValue(null);
-    this.receiptVoucherFormGroup.get('ReceiptVoucherMasterDrAcNo').setValue(-1);
-    this.receiptVoucherFormGroup.get('ReceiptVoucherMasterCurrencyId').setValue(-1);
-    this.btnFlag = { edit: false, cancel: false, save: true, update: false, delete: false };
-    this.index = 0;
-  }
-
-  showMaximizableDialog() {
-    this.getAllReceiptVouchrs();
-    this.displayMaximizable = true;
-  }
-
-  updateFormGrid(Rcpt: ReceiptVoucher) {
-    this.search = null;
-    this.receiptVoucherFormGroup.patchValue(
-      {
-
-        ReceiptVoucherMasterVoucherNo: Rcpt.receiptVoucherMasterVoucherNo,
-        ReceiptVoucherMasterVoucherDate: new Date(Rcpt.receiptVoucherMasterVoucherDate),
-        ReceiptVoucherMasterRefNo: Rcpt.receiptVoucherMasterRefNo,
-        ReceiptVoucherMasterDrAcNo: Rcpt.receiptVoucherMasterDrAcNo,
-        ReceiptVoucherMasterDrAmount: Rcpt.receiptVoucherMasterDrAmount,
-        ReceiptVoucherMasterNarration: Rcpt.receiptVoucherMasterNarration,
-        ReceiptVoucherMasterCurrencyId: Rcpt.receiptVoucherMasterCurrencyId
-
-      }
-    );
-    this.accountTransactionList = Rcpt.accountsTransactions;
-    // this.jobArray.find(j => j.jobMasterJobName.trim()  === k.jobname.trim()).jobMasterId,
-    const gridData: GridData[] = Rcpt.receiptVoucherDetails.map(k => {
-
-      let accountId: string = k.receiptVoucherDetailsCrAcNo != null ? this.acctArry.find(l => l.match(k.receiptVoucherDetailsCrAcNo)) : null;
-      let jobId: string = (k.receiptVoucherDetailsJobId != null) ? this.jobArry.find(l =>
-        l.match(k.receiptVoucherDetailsJobId.toString())) : null;
-
-
-      return {
-        account: accountId,
-        credit: k.receiptVoucherDetailsCrAmount,
-        jobname: jobId,
-        costcenter: null,
-        narration: k.receiptVoucherDetailsNarration,
-        id: k.receiptVoucherDetailsId
-      };
-    });
-    this.receiptvoucherentry.data = gridData;
-    this.hotRegisterer.getInstance(this.hotid).updateSettings({ data: gridData, readOnly: true });
-
-  }
-
-  handleChange(e) {
-    this.index = e.index;
-  }
-
-
-  GetSavedReceiptDetails(id: string) {
-    this.index = 0;
-    this.accountapi.GetSavedReceiptDetails(id).subscribe((data) => {
-      if (data !== null) {
-        this.btnFlag = { edit: true, cancel: true, save: false, update: true, delete: true };
-        this.accountTransactionList = data.result.accountsTransactions;
-        this.updateFormGrid(data.result);
-        this.savedReceiptVoucher = data.result;
-        this.receiptVoucherFormGroup.disable();
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Alert', detail: 'Receipt voucher not found' });
-      }
-    }, (err) => {
-      this.messageService.add({ severity: 'error', summary: 'Alert', detail: 'Failed' });
-    });
-  }
-
-  delete() {
-    this.confirmation.confirm({
-      key: 'confirm-key',
-      message: 'Do you want to delete voucher?',
-      accept: () => {
-        this.accountapi.DeleteReceiptVoucher(this.savedReceiptVoucher).subscribe((data) => {
-          this.messageService.add({ severity: 'success', summary: 'Alert', detail: 'Receipt Voucher Deleted Succesfully' });
-          this.new();
-        }, (err) => {
-          this.messageService.add({ severity: 'error', summary: 'Alert', detail: 'Failed' });
-        });
-      }
-    });
-
-  }
-  cancel() {
-    this.GetSavedReceiptDetails(this.receiptVoucherFormGroup.getRawValue().ReceiptVoucherMasterVoucherNo);
-  }
-
-  edit() {
-    this.hotRegisterer.getInstance(this.hotid).updateSettings({ readOnly: false });
   }
 }
-
-interface GridData {
-  account?: string;
-  credit?: number;
-  jobname?: string;
-  costcenter?: string;
-  narration?: string;
-  id?: number;
-}
-
 interface ButtonFlag {
   edit?: boolean; cancel?: boolean; update?: boolean;
   save?: boolean; delete?: boolean;
