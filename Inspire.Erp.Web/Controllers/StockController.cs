@@ -148,6 +148,7 @@ namespace Inspire.Erp.Web.Controllers
                 throw;
             }
         }
+        [HttpPost("getDetailsByItem")]
         public async Task<string> getDetailsByItem([FromBody] StockLedgerReportModel obj)
         {
             try
@@ -179,7 +180,6 @@ namespace Inspire.Erp.Web.Controllers
                     using (SqlCommand com = new SqlCommand(query, con))
                     {
                         con.Open();
-                        com.CommandType = CommandType.StoredProcedure;
                         using (SqlDataAdapter customerDA = new SqlDataAdapter())
                         {
                             customerDA.SelectCommand = com;

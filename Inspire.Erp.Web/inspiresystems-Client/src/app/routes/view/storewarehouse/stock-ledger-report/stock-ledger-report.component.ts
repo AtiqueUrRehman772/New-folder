@@ -260,7 +260,8 @@ export class StockLedgerReportComponent implements OnInit {
       data => {
         this.response = data;
         this.dataset = this.response.Stock_Register;
-        GlobalSerivceService.getDetailsByItemFromStockLedger=this.dataset;
+        console.log(this.dataset);
+        GlobalSerivceService.getDetailsByItemFromStockLedger=this.response.Stock_Register;
         this.gridHeader = "Showing Filtered Data";
         this.showItemList = false;
       }, (error) => {

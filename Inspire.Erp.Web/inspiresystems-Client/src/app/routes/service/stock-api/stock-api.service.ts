@@ -19,7 +19,6 @@ export class StockApiService {
     return this.http.post('http://localhost:53447/api/Stock/getStockMovementDetailsRpt',payload);
   }
   getDetailsByItem(payload:any){
-    console.log(payload);
     return this.http.post('http://localhost:53447/api/Stock/getDetailsByItem',payload);
   }
   getAllItemsList(){
