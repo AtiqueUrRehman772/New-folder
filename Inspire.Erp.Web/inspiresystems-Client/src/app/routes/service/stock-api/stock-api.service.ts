@@ -12,8 +12,7 @@ export class StockApiService {
     return this.http.post('http://localhost:53447/api/Stock/getStockLedgerReport','');
   }
   getFilteredStockLedgerRpt(payload:any){
-    console.log('Filtered Stock');
-    console.log(payload);
+
     return this.http.post('http://localhost:53447/api/Stock/getFilteredStockLedgerRpt',payload);
   }
   getStockMovementDetailsRpt(payload:any){

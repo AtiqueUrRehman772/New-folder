@@ -13,6 +13,8 @@ import { StockApiService } from 'src/app/routes/service/stock-api/stock-api.serv
 import { interval } from 'rxjs';
 import * as $ from 'jquery';
 import { MasterApiService } from 'src/app/routes/service/master.api.services';
+import { GlobalSerivceService } from 'src/app/routes/service/stock-api/global-serivce.service';
+
 type SheetData = any[][];
 
 @Component({
@@ -258,6 +260,7 @@ export class StockLedgerReportComponent implements OnInit {
       data => {
         this.response = data;
         this.dataset = this.response.Stock_Register;
+        GlobalSerivceService.getDetailsByItemFromStockLedger=this.dataset;
         this.gridHeader = "Showing Filtered Data";
         this.showItemList = false;
       }, (error) => {

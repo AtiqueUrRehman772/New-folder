@@ -16,6 +16,7 @@ import { HotTableRegisterer } from '@handsontable/angular';
 import { summaryFileName } from '@angular/compiler/src/aot/util';
 import { DropDownValidator } from 'src/app/shared/validator/customvalidtor';
 import { StockApiService } from 'src/app/routes/service/stock-api/stock-api.service';
+import { GlobalSerivceService } from 'src/app/routes/service/stock-api/global-serivce.service';
 
 @Component({
   selector: 'app-stockmovementreport',
@@ -71,7 +72,10 @@ list:any;
   stockMovementRptFormGroup: FormGroup;
 
   cols: any;
+  ItemFromStockLedger:any;
   ngOnInit(): void {
+    this.ItemFromStockLedger =GlobalSerivceService.getDetailsByItemFromStockLedger;
+    console.log(GlobalSerivceService.getDetailsByItemFromStockLedger);
     this.cols = [
       { field: 'Item_Master_Item_ID', header: 'Item Id' },
       { field: 'Item_Master_Item_Name', header: 'Item Name' },
