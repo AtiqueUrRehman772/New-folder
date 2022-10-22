@@ -156,26 +156,18 @@ namespace Inspire.Erp.Web.Controllers
 
                 using (SqlConnection con = new SqlConnection(conn))
                 {
-                    string query = "select isnull(Item_Master_Item_Id,0) as Item_Id,Stock_Register_Unit_ID,OpenQty=Sum(case when Stock_Register.Stock_Register_Voucher_Date < '" + obj.dateFrom + "' then (Stock_Register.Stock_Register_SIN-Stock_Register.Stock_Register_Sout) " +
-                                   "else 0 end)," +
-                                   "OpenQtyAmount = Sum(case when Stock_Register.Stock_Register_Voucher_Date < '" + obj.dateFrom + "' then((Stock_Register.Stock_Register_SIN - Stock_Register.Stock_Register_Sout) * Stock_Register_Rate) " +
-                                   "else 0 end)," +
-                                   "StockIn = Sum(case when Stock_Register.Stock_Register_Voucher_Date between '" + obj.dateFrom + "' and '" + obj.dateTo + "' and Stock_Register.Stock_Register_Trans_Type = 'SalesReturn' then Stock_Register.Stock_Register_SIN " +
-                                   "else 0 end)," +
-                                   "StockInAmount = Sum(case when Stock_Register.Stock_Register_Voucher_Date between '" + obj.dateFrom + "' and '" + obj.dateTo + "' and Stock_Register.Stock_Register_Trans_Type = 'SalesReturn' then(Stock_Register.Stock_Register_SIN * Stock_Register_Rate) " +
-                                   "else 0 end)," +
-                                   "StockOut = (Sum(case when Stock_Register.Stock_Register_Voucher_Date between '" + obj.dateFrom + "' and '" + obj.dateTo + "' then(Stock_Register.Stock_Register_Sout) else 0 end) - " +
-                                   "Sum(case when Stock_Register_Voucher_Date > '" + obj.dateFrom + "' and Stock_Register_Trans_Type = 'SalesReturn' then(Stock_Register_SIN * Stock_Register_Rate) " +
-                                   "else 0 end))," +
-                                   "StockOutAmount = (Sum(case when Stock_Register.Stock_Register_Voucher_Date between '" + obj.dateFrom + "' and '" + obj.dateTo + "' then(Stock_Register.Stock_Register_Sout * Stock_Register_Rate) " +
-                                   "else 0 end)-Sum(case when Stock_Register_Voucher_Date > '" + obj.dateFrom + "' and Stock_Register_Trans_Type = 'SalesReturn' then(Stock_Register_SIN * Stock_Register_Rate) " +
-                                   "else 0 end))," +
-                                   "TotalBal = Sum(case when Stock_Register_Voucher_Date <= '" + obj.dateTo + "' then(Stock_Register_SIN - Stock_Register_Sout) " +
-                                   "else 0 end)," +
-                                   "TotalBalAmount = Sum(case when Stock_Register_Voucher_Date <= '" + obj.dateTo + "' then((Stock_Register_SIN - Stock_Register_Sout) * Stock_Register_Rate) " +
-                                   "else 0 end)," +
+                    string query = "select isnull(Item_Master_Item_Id,0) as Item_Id,Stock_Register_Unit_ID,OpenQty=Sum(Stock_Register.Stock_Register_SIN-Stock_Register.Stock_Register_Sout) " +
+                                   "OpenQtyAmount = Sum((Stock_Register.Stock_Register_SIN - Stock_Register.Stock_Register_Sout) * Stock_Register_Rate) " +
+                                   "StockIn = Sum(Stock_Register.Stock_Register_SIN " +
+                                   "StockInAmount = Sum(Stock_Register.Stock_Register_SIN * Stock_Register_Rate) " +
+                                   "StockOut = (Sum(Stock_Register.Stock_Register_Sout) else 0 end) - " +
+                                   "Sum(Stock_Register_SIN * Stock_Register_Rate) " +
+                                   "StockOutAmount = (Sum(Stock_Register.Stock_Register_Sout * Stock_Register_Rate) " +
+                                   "else 0 end)-Sum(Stock_Register_SIN * Stock_Register_Rate) " +
+                                   "TotalBal = Sum(Stock_Register_SIN - Stock_Register_Sout) " +
+                                   "TotalBalAmount = Sum((Stock_Register_SIN - Stock_Register_Sout) * Stock_Register_Rate) " +
                                    "isnull(Item_Master.Item_Master_Item_Name,'(No Name)') as Item_Name from Stock_Register " +
-                                   "Left outer join Item_Master  on Stock_Register.Stock_Register_Material_ID = Item_Master.Item_Master_Item_ID where Stock_Register.Stock_Register_Voucher_Date < '" + obj.dateTo + "' and Stock_Register.Stock_Register_Voucher_Date > '" + obj.dateFrom + "' " +
+                                   "Left outer join Item_Master  on Stock_Register.Stock_Register_Material_ID = Item_Master.Item_Master_Item_ID where"+
                                    "and Item_Master_Item_Id = " + obj.itemGroup + " group by Item_Master_Item_Name,Item_Master_Item_Id,Stock_Register_Unit_ID having " + "SUM(Stock_Register.Stock_Register_SIN) >= SUM(Stock_Register.Stock_Register_Sout) ";
                     using (SqlCommand com = new SqlCommand(query, con))
                     {
