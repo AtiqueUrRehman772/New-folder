@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using Inspire.Erp.Application;
+using Inspire.Erp.Application.Account.Implementations;
+using Inspire.Erp.Application.Account.Interfaces;
 using Inspire.Erp.Application.Master.Implementations;
 using Inspire.Erp.Application.Master.Interfaces;
 using Inspire.Erp.Infrastructure;
@@ -31,6 +33,7 @@ namespace Inspire.Erp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IStoreWareHouse, StoreWareHouse>();
             services.AddControllers();
             services.AddApplication();
             services.AddInfrastructure(Configuration);

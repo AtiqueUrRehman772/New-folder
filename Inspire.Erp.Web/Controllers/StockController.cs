@@ -1,4 +1,5 @@
-﻿using Inspire.Erp.Infrastructure.Database;
+﻿using Inspire.Erp.Application.Account.Interfaces;
+using Inspire.Erp.Infrastructure.Database;
 using Inspire.Erp.Web.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,8 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using static Inspire.Erp.Domain.Entities.StoreWareHouse;
+using ItemMasterViewModel = Inspire.Erp.Domain.Entities.StoreWareHouse.ItemMasterViewModel;
 
 namespace Inspire.Erp.Web.Controllers
 {
@@ -15,72 +18,31 @@ namespace Inspire.Erp.Web.Controllers
     [ApiController]
     public class StockController : ControllerBase
     {
-        private readonly InspireErpDBContext context;
-        private readonly IConfiguration configuration;
-        private static string conn;
-        public StockController(InspireErpDBContext context, IConfiguration _configuration)
+        private IStoreWareHouse _sw;
+        public StockController(IStoreWareHouse sw)
         {
-            configuration = _configuration;
-            conn = configuration.GetConnectionString("db_con");
-            this.context = context;
+            _sw = sw;
         }
         [HttpPost("getStockLedgerReport")]
         public async Task<string> getStockLedgerReport()
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(conn))
-                {
-                    string query = "getStockLedgerRpt";
-                    using (SqlCommand com = new SqlCommand(query, con))
-                    {
-                        com.CommandType = CommandType.StoredProcedure;
-                        con.Open();
-                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
-                        {
-                            customerDA.SelectCommand = com;
-                            using (DataSet customerDS = new DataSet())
-                            {
-                                customerDA.Fill(customerDS, "Stock_Register");
-                                con.Close();
-                                return JsonConvert.SerializeObject(customerDS);
-                            }
-                        }
-                    }
-                }
+                string response=await _sw.getStockLedgerReport();
+                return response;
             }
             catch (System.Exception)
             {
-
                 throw;
             }
         }
         [HttpPost("getFilteredStockLedgerRpt")]
-        public async Task<string> getFilteredStockLedgerRpt(StockLedgerReportModel obj)
+        public async Task<string> getFilteredStockLedgerRpt([FromBody] StockLedgerReportModel obj)
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(conn))
-                {
-                    string query = "getFilteredStockLedgerRpt";
-                    using (SqlCommand com = new SqlCommand(query, con))
-                    {
-                        con.Open();
-                        com.CommandType = CommandType.StoredProcedure;
-                        com.Parameters.AddWithValue("dateFrom", obj.dateFrom);
-                        com.Parameters.AddWithValue("dateTo", obj.dateTo);
-                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
-                        {
-                            customerDA.SelectCommand = com;
-                            using (DataSet customerDS = new DataSet())
-                            {
-                                customerDA.Fill(customerDS, "Stock_Register");
-                                con.Close();
-                                return JsonConvert.SerializeObject(customerDS);
-                            }
-                        }
-                    }
-                }
+                string response = await _sw.getFilteredStockLedgerRpt(obj);
+                return response;
             }
             catch (System.Exception)
             {
@@ -92,25 +54,8 @@ namespace Inspire.Erp.Web.Controllers
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(conn))
-                {
-                    string query = "getStockMovementRpt";
-                    using (SqlCommand com = new SqlCommand(query, con))
-                    {
-                        con.Open();
-                        com.CommandType = CommandType.StoredProcedure;
-                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
-                        {
-                            customerDA.SelectCommand = com;
-                            using (DataSet customerDS = new DataSet())
-                            {
-                                customerDA.Fill(customerDS, "ItemDetails");
-                                con.Close();
-                                return JsonConvert.SerializeObject(customerDS);
-                            }
-                        }
-                    }
-                }
+                string response = await _sw.getStockMovementRpt();
+                return response;
             }
             catch (System.Exception)
             {
@@ -122,26 +67,8 @@ namespace Inspire.Erp.Web.Controllers
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(conn))
-                {
-                    string query = @"getStockMovementDetailsRpt";
-                    using (SqlCommand com = new SqlCommand(query, con))
-                    {
-                        con.Open();
-                        com.CommandType = CommandType.StoredProcedure;
-                        com.Parameters.AddWithValue("ItemMasterItemId", id.ItemMasterItemId);
-                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
-                        {
-                            customerDA.SelectCommand = com;
-                            using (DataSet customerDS = new DataSet())
-                            {
-                                customerDA.Fill(customerDS, "ItemDetails");
-                                con.Close();
-                                return JsonConvert.SerializeObject(customerDS);
-                            }
-                        }
-                    }
-                }
+                string response = await _sw.getStockLedgerReport();
+                return response;
             }
             catch (System.Exception)
             {
@@ -153,34 +80,8 @@ namespace Inspire.Erp.Web.Controllers
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(conn))
-                {
-                    string query = "select isnull(Item_Master_Item_Id,0) as Item_Id,Stock_Register_Unit_ID,OpenQty=Sum(Stock_Register_SIN-Stock_Register_Sout), " +
-                                   "OpenQtyAmount = Sum((Stock_Register_SIN - Stock_Register_Sout) * Stock_Register_Rate), " +
-                                   "StockIn = Sum(Stock_Register_SIN), " +
-                                   "StockInAmount = Sum(Stock_Register_SIN * Stock_Register_Rate), " +
-                                   "StockOut = Sum(Stock_Register_Sout)," +
-                                   "StockOutAmount = Sum(Stock_Register_Sout * Stock_Register_Rate), " +
-                                   "TotalBal = Sum(Stock_Register_SIN - Stock_Register_Sout), " +
-                                   "TotalBalAmount = Sum((Stock_Register_SIN - Stock_Register_Sout) * Stock_Register_Rate), " +
-                                   "isnull(Item_Master.Item_Master_Item_Name,'(No Name)') as Item_Name from Stock_Register " +
-                                   "Left outer join Item_Master  on Stock_Register.Stock_Register_Material_ID = Item_Master.Item_Master_Item_ID where " +
-                                   "Item_Master_Item_Id = " + obj.itemGroup + " group by Item_Master_Item_Name,Item_Master_Item_Id,Stock_Register_Unit_ID having " + "SUM(Stock_Register.Stock_Register_SIN) >= SUM(Stock_Register.Stock_Register_Sout) ";
-                    using (SqlCommand com = new SqlCommand(query, con))
-                    {
-                        con.Open();
-                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
-                        {
-                            customerDA.SelectCommand = com;
-                            using (DataSet customerDS = new DataSet())
-                            {
-                                customerDA.Fill(customerDS, "Stock_Register");
-                                con.Close();
-                                return JsonConvert.SerializeObject(customerDS);
-                            }
-                        }
-                    }
-                }
+                string response = await _sw.getStockLedgerReport();
+                return response;
             }
             catch (System.Exception)
             {
@@ -192,26 +93,8 @@ namespace Inspire.Erp.Web.Controllers
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(conn))
-                {
-                    string query = "getStockVchDetails";
-                    using (SqlCommand com = new SqlCommand(query, con))
-                    {
-                        con.Open();
-                        com.CommandType = CommandType.StoredProcedure;
-                        com.Parameters.AddWithValue("itemGroup", obj.itemGroup);
-                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
-                        {
-                            customerDA.SelectCommand = com;
-                            using (DataSet customerDS = new DataSet())
-                            {
-                                customerDA.Fill(customerDS, "Stock_Register");
-                                con.Close();
-                                return JsonConvert.SerializeObject(customerDS);
-                            }
-                        }
-                    }
-                }
+                string response = await _sw.getStockLedgerReport();
+                return response;
             }
             catch (System.Exception)
             {
@@ -223,25 +106,8 @@ namespace Inspire.Erp.Web.Controllers
         {
             try
             {
-                string query = "getAllItems";
-                using (SqlConnection con = new SqlConnection(conn))
-                {
-                    using (SqlCommand com = new SqlCommand(query, con))
-                    {
-                        con.Open();
-                        com.CommandType = CommandType.StoredProcedure;
-                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
-                        {
-                            customerDA.SelectCommand = com;
-                            using (DataSet customerDS = new DataSet())
-                            {
-                                customerDA.Fill(customerDS, "Item_Master");
-                                con.Close();
-                                return JsonConvert.SerializeObject(customerDS);
-                            }
-                        }
-                    }
-                }
+                string response = await _sw.getAllItems();
+                return response;
             }
             catch (System.Exception ex)
             {
@@ -254,25 +120,8 @@ namespace Inspire.Erp.Web.Controllers
         {
             try
             {
-                string query = "";
-                using (SqlConnection con = new SqlConnection(conn))
-                {
-                    using (SqlCommand com = new SqlCommand(query, con))
-                    {
-                        con.Open();
-                        com.CommandType = CommandType.StoredProcedure;
-                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
-                        {
-                            customerDA.SelectCommand = com;
-                            using (DataSet customerDS = new DataSet())
-                            {
-                                customerDA.Fill(customerDS, "Brand_Master");
-                                con.Close();
-                                return JsonConvert.SerializeObject(customerDS);
-                            }
-                        }
-                    }
-                }
+                string response = await _sw.getAllBrands();
+                return response;
             }
             catch (System.Exception ex)
             {
