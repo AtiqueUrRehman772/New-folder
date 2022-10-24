@@ -26,40 +26,46 @@
         <p-checkbox label="Suppress Allocation in Print"></p-checkbox>
     </div>
 </p-toolbar>
-<div class="card card-w-title" [formGroup]='stockMovementRptFormGroup'>
+<div class="card card-w-title" [formGroup]='stockMovementRptFormGroup1'>
     <p-panel>
         <p-header>
             {{'Report 1'| translate}}
         </p-header>
         <div class="p-grid">
             <div class="p-col-12 p-md-12 p-lg-1 " for="account">
-                <b>{{'Tree'| translate}}</b>
+                <b>{{'Item Group'| translate}}</b>
             </div>
             <div class="p-col-12 p-md-12 p-lg-2">
-                <input id="tree" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
+                <input id="itemGroup" formControlName='stockMovementRptItemGroup' pInputText>
                 <button pButton type="button" icon="pi pi-search"></button>
             </div>
-            <div class="p-col-12 p-md-12 p-lg-1 " for="account">
-                <b>{{'Date From'| translate}}</b>
+            <div class="p-col-4 p-md-4 p-lg-1">
+                <input id="itemTree" type="checkbox" name="stockMovementRptDetailType"
+                    formControlName='stockMovementRptDetailType' pInputCheck>
+                <label><b>Item Tree</b></label>
             </div>
-            <div class="p-col-12 p-md-12 p-lg-2">
-                <!-- <input id="dateFrom" type="date" formControlName='ReceiptVoucherMasterDrAmount' pInputText> -->
-                <p-calendar id="dateFrom"></p-calendar>
-                <!-- <button pButton type="button" icon="pi pi-calendar"></button> -->
+            <div class="p-col-4 p-md-4 p-lg-1">
+                <input id="details" type="radio" name="stockMovementRptDetails"
+                    formControlName='stockMovementRptDetails' pInputRadio>
+                <label><b>Details</b></label>
             </div>
-            <div class="p-col-12 p-md-12 p-lg-1 " for="account">
-                <b>{{'Date To'| translate}}</b>
-            </div>
-            <div class="p-col-12 p-md-12 p-lg-2">
-                <!-- <input id="dateTo" type="date" formControlName='ReceiptVoucherMasterDrAmount' pInputText> -->
-                <p-calendar id="dateTo"></p-calendar>
-                <!-- <button pButton type="button" icon="pi pi-calendar"></button> -->
+            <div class="p-col-4 p-md-4 p-lg-1">
+                <input id="summary" type="radio" name="stockMovementRptDetails"
+                    formControlName='stockMovementRptDetails' pInputRadio>
+                <label><b>Summary</b></label>
             </div>
             <div class="p-col-12 p-md-12 p-lg-1 " for="account">
                 <b>{{'Sales Man'| translate}}</b>
             </div>
             <div class="p-col-12 p-md-12 p-lg-2">
-                <input id="salesMan" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
+                <input id="salesMan" formControlName='stockMovementRptSalesMan' pInputText>
+                <button pButton type="button" icon="pi pi-search"></button>
+            </div>
+            <div class="p-col-12 p-md-12 p-lg-1 " for="account">
+                <b>{{'Job'| translate}}</b>
+            </div>
+            <div class="p-col-12 p-md-12 p-lg-2">
+                <input id="job" formControlName='stockMovementRptJob' pInputText>
                 <button pButton type="button" icon="pi pi-search"></button>
             </div>
         </div>
@@ -68,41 +74,44 @@
                 <b>{{'Item'| translate}}</b>
             </div>
             <div class="p-col-12 p-md-12 p-lg-2">
-                <input id="item" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
+                <input id="itemName" formControlName='stockMovementRptItemName' pInputText>
                 <button pButton type="button" icon="pi pi-search" (click)="GetItemList()"></button>
             </div>
-            <div class="p-col-4 p-md-4 p-lg-1">
-                <input id="itemTree" type="checkbox" name="detailType" formControlName='ReceiptVoucherMasterDrAmount'
-                    pInputCheck>
-                <label><b>Item Tree</b></label>
+            <div class="p-col-12 p-md-12 p-lg-1 " for="account">
+                <b>{{'Date From'| translate}}</b>
             </div>
-            <div class="p-col-4 p-md-4 p-lg-1">
-                <input id="details" type="radio" name="ReceiptVoucherMasterDrAmount"
-                    formControlName='ReceiptVoucherMasterDrAmount' pInputRadio>
-                <label><b>Details</b></label>
+            <div class="p-col-12 p-md-12 p-lg-2">
+                <p-calendar id="dateFrom"></p-calendar>
             </div>
-            <div class="p-col-4 p-md-4 p-lg-1">
-                <input id="summary" type="radio" name="ReceiptVoucherMasterDrAmount"
-                    formControlName='ReceiptVoucherMasterDrAmount' pInputRadio>
-                <label><b>Summary</b></label>
+            <div class="p-col-12 p-md-12 p-lg-1 " for="account">
+                <b>{{'Date To'| translate}}</b>
+            </div>
+            <div class="p-col-12 p-md-12 p-lg-2">
+                <p-calendar id="dateTo"></p-calendar>
             </div>
             <div class="p-col-12 p-md-12 p-lg-1 " for="account">
                 <b>{{'Location'| translate}}</b>
             </div>
             <div class="p-col-12 p-md-12 p-lg-2">
-                <input id="location" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
-                <button pButton type="button" icon="pi pi-search"></button>
-            </div>
-            <div class="p-col-12 p-md-12 p-lg-1 " for="account">
-                <b>{{'Job'| translate}}</b>
-            </div>
-            <div class="p-col-12 p-md-12 p-lg-2">
-                <input id="job" formControlName='ReceiptVoucherMasterDrAmount' pInputText>
+                <input id="location" formControlName='stockMovementRptLocation' pInputText>
                 <button pButton type="button" icon="pi pi-search"></button>
             </div>
         </div>
         <div class="grid">
-            <hot-table [hotId]="hotid" [licenseKey]="licensekey" [settings]="stockmovementrpt"></hot-table>
+            <hot-table [hotId]="hotid" [data]="ItemFromStockLedger" [licenseKey]="licensekey"
+                                [settings]="stockmovementrpt">
+                                <hot-column data="Item_Id" [readOnly]="true" title="Item Id"></hot-column>
+                                <hot-column data="Item_Name" title="Item Name"></hot-column>
+                                <hot-column data="Stock_Register_Unit_ID" title="Unit"></hot-column>
+                                <hot-column data="OpenQty" title="Open Qty"></hot-column>
+                                <hot-column data="OpenQtyAmount" title="Open Amount"></hot-column>
+                                <hot-column data="StockIn" title="Stock In Qty"></hot-column>
+                                <hot-column data="StockInAmount" title="Stock In Amt."></hot-column>
+                                <hot-column data="StockOut" title="Stock Out Qty"></hot-column>
+                                <hot-column data="StockOutAmount" title="Stock Out Amt."></hot-column>
+                                <hot-column data="TotalBal" title="Total Balance"></hot-column>
+                                <hot-column data="TotalBalAmount" title="Total Bal. Amt."></hot-column>
+                            </hot-table>
         </div>
     </p-panel>
 </div>
@@ -132,7 +141,18 @@
                             </div>
                         </div>
                         <div class="grid">
-                            <hot-table [hotId]="hotid" [licenseKey]="licensekey" [settings]="stockmovementrpt">
+                            <hot-table [hotId]="hotid" [data]="vchDetailsResponse" [licenseKey]="licensekey"
+                                [settings]="stockmovementrptDtls">
+                                <hot-column data="Stock_Register_Trans_Type" title="Vch. Type"></hot-column>
+                                <hot-column data="Stock_Register_Ref_Voucher_No" title="Vch. No."></hot-column>
+                                <hot-column data="Stock_Register_Voucher_Date" title="Vch. Date"></hot-column>
+                                <hot-column data="Stock_Register_Unit_ID" title="Unit"></hot-column>
+                                <hot-column data="Stock_Register_Rate" title="Rate"></hot-column>
+                                <hot-column data="StockIn" title="Qty"></hot-column>
+                                <hot-column data="StockInAmt" title=" Amount"></hot-column>
+                                <hot-column data="Stock_Register_Material_ID" [readOnly]="true" title="Itm Group"></hot-column>
+                                <hot-column data="Job" title="Job"></hot-column>
+                                <hot-column data="StockLocation" title="Location"></hot-column>
                             </hot-table>
                         </div>
                     </p-panel>
@@ -159,7 +179,18 @@
                             </div>
                         </div>
                         <div class="grid">
-                            <hot-table [hotId]="hotid" [licenseKey]="licensekey" [settings]="stockmovementrpt">
+                            <hot-table [hotId]="hotid" [data]="vchDetailsResponse" [licenseKey]="licensekey"
+                                [settings]="stockmovementrptDtls">
+                                <hot-column data="Stock_Register_Trans_Type" title="Vch. Type"></hot-column>
+                                <hot-column data="Stock_Register_Ref_Voucher_No" title="Vch. No."></hot-column>
+                                <hot-column data="Stock_Register_Voucher_Date" title="Vch. Date"></hot-column>
+                                <hot-column data="Stock_Register_Unit_ID" title="Unit"></hot-column>
+                                <hot-column data="Stock_Register_Rate" title="Rate"></hot-column>
+                                <hot-column data="StockOut" title="Qty"></hot-column>
+                                <hot-column data="StockOutAmt" title=" Amount"></hot-column>
+                                <hot-column data="Stock_Register_Material_ID" [readOnly]="true" title="Itm Group"></hot-column>
+                                <hot-column data="Job" title="Job"></hot-column>
+                                <hot-column data="StockLocation" title="Location"></hot-column>
                             </hot-table>
                         </div>
                     </p-panel>

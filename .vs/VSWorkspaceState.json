@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Inspire.Erp.Web"
   ],
+  "SelectedNode": "\\Inspire.Erp.Web\\appsettings.json",
   "PreviewInSolutionExplorer": false
 }

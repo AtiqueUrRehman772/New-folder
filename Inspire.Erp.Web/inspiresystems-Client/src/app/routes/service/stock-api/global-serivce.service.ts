@@ -4,5 +4,5 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export abstract class GlobalSerivceService {
- static getDetailsByItemFromStockLedger:any;
+ static getDetailsByItemFromStockLedger:any = null;
 }

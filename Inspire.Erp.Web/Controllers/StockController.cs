@@ -62,13 +62,13 @@ namespace Inspire.Erp.Web.Controllers
             {
                 using (SqlConnection con = new SqlConnection(conn))
                 {
-                    string query = "getFilteredStockLedgerRpt"; 
+                    string query = "getFilteredStockLedgerRpt";
                     using (SqlCommand com = new SqlCommand(query, con))
                     {
                         con.Open();
                         com.CommandType = CommandType.StoredProcedure;
-                        com.Parameters.AddWithValue("dateFrom",obj.dateFrom);
-                        com.Parameters.AddWithValue("dateTo",obj.dateTo);
+                        com.Parameters.AddWithValue("dateFrom", obj.dateFrom);
+                        com.Parameters.AddWithValue("dateTo", obj.dateTo);
                         using (SqlDataAdapter customerDA = new SqlDataAdapter())
                         {
                             customerDA.SelectCommand = com;
@@ -153,22 +153,59 @@ namespace Inspire.Erp.Web.Controllers
         {
             try
             {
-
                 using (SqlConnection con = new SqlConnection(conn))
                 {
-                    string query = "select isnull(Item_Master_Item_Id,0) as Item_Id,Stock_Register_Unit_ID,OpenQty=Sum(Stock_Register.Stock_Register_SIN-Stock_Register.Stock_Register_Sout) " +
-                                   "OpenQtyAmount = Sum((Stock_Register.Stock_Register_SIN - Stock_Register.Stock_Register_Sout) * Stock_Register_Rate) " +
-                                   "StockIn = Sum(Stock_Register.Stock_Register_SIN " +
-                                   "StockInAmount = Sum(Stock_Register.Stock_Register_SIN * Stock_Register_Rate) " +
-                                   "StockOut = (Sum(Stock_Register.Stock_Register_Sout) else 0 end) - " +
-                                   "Sum(Stock_Register_SIN * Stock_Register_Rate) " +
-                                   "StockOutAmount = (Sum(Stock_Register.Stock_Register_Sout * Stock_Register_Rate) " +
-                                   "else 0 end)-Sum(Stock_Register_SIN * Stock_Register_Rate) " +
-                                   "TotalBal = Sum(Stock_Register_SIN - Stock_Register_Sout) " +
-                                   "TotalBalAmount = Sum((Stock_Register_SIN - Stock_Register_Sout) * Stock_Register_Rate) " +
+                    string query = "select isnull(Item_Master_Item_Id,0) as Item_Id,Stock_Register_Unit_ID,OpenQty=Sum(Stock_Register_SIN-Stock_Register_Sout), " +
+                                   "OpenQtyAmount = Sum((Stock_Register_SIN - Stock_Register_Sout) * Stock_Register_Rate), " +
+                                   "StockIn = Sum(Stock_Register_SIN), " +
+                                   "StockInAmount = Sum(Stock_Register_SIN * Stock_Register_Rate), " +
+                                   "StockOut = Sum(Stock_Register_Sout)," +
+                                   "StockOutAmount = Sum(Stock_Register_Sout * Stock_Register_Rate), " +
+                                   "TotalBal = Sum(Stock_Register_SIN - Stock_Register_Sout), " +
+                                   "TotalBalAmount = Sum((Stock_Register_SIN - Stock_Register_Sout) * Stock_Register_Rate), " +
                                    "isnull(Item_Master.Item_Master_Item_Name,'(No Name)') as Item_Name from Stock_Register " +
-                                   "Left outer join Item_Master  on Stock_Register.Stock_Register_Material_ID = Item_Master.Item_Master_Item_ID where"+
-                                   "and Item_Master_Item_Id = " + obj.itemGroup + " group by Item_Master_Item_Name,Item_Master_Item_Id,Stock_Register_Unit_ID having " + "SUM(Stock_Register.Stock_Register_SIN) >= SUM(Stock_Register.Stock_Register_Sout) ";
+                                   "Left outer join Item_Master  on Stock_Register.Stock_Register_Material_ID = Item_Master.Item_Master_Item_ID where " +
+                                   "Item_Master_Item_Id = " + obj.itemGroup + " group by Item_Master_Item_Name,Item_Master_Item_Id,Stock_Register_Unit_ID having " + "SUM(Stock_Register.Stock_Register_SIN) >= SUM(Stock_Register.Stock_Register_Sout) ";
+                    using (SqlCommand com = new SqlCommand(query, con))
+                    {
+                        con.Open();
+                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
+                        {
+                            customerDA.SelectCommand = com;
+                            using (DataSet customerDS = new DataSet())
+                            {
+                                customerDA.Fill(customerDS, "Stock_Register");
+                                con.Close();
+                                return JsonConvert.SerializeObject(customerDS);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+        [HttpPost("getStockVchDetails")]
+        public async Task<string> getStockVchDetails([FromBody] StockLedgerReportModel obj)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conn))
+                {
+                    string query = @"select Stock_Register_Trans_Type,Stock_Register_Ref_Voucher_No,Stock_Register_Voucher_Date,
+                         StockIn = Stock_Register_SIN,
+                         StockInAmt = Stock_Register_SIN * Stock_Register_Rate,
+                         StockOut = Stock_Register_Sout,
+                         StockOutAmt = Stock_Register_Sout * Stock_Register_Rate,
+                         StockLocation = Location_Master.Location_Master_Location_Name,
+                         Job = Job_Master.Job_Master_Job_Name,
+                         Stock_Register_Unit_ID,Stock_Register_Rate,Stock_Register_Material_ID from Stock_Register 
+                         left join Location_Master on Stock_Register.Stock_Register_Location_ID = Location_Master.Location_Master_Location_ID 
+                         left join Job_Master on Stock_Register.Stock_Register_Job_ID = Job_Master_Job_ID
+                         where  
+                         Stock_Register_Material_ID = " + obj.itemGroup;
                     using (SqlCommand com = new SqlCommand(query, con))
                     {
                         con.Open();

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MasterApiService } from 'src/app/routes/service/master.api.services';
 import { MenuItem } from 'primeng/api/menuitem';
 import Handsontable from 'handsontable';
@@ -13,6 +13,7 @@ import { JobMaster } from 'src/app/routes/domain/JobMaster';
 import { CostCenterMaster } from 'src/app/routes/domain/CostCenterMaster';
 import { AccountsTransactions } from 'src/app/routes/domain/AccountsTransactions';
 import { HotTableRegisterer } from '@handsontable/angular';
+import * as $ from 'jquery';
 import { summaryFileName } from '@angular/compiler/src/aot/util';
 import { DropDownValidator } from 'src/app/shared/validator/customvalidtor';
 import { StockApiService } from 'src/app/routes/service/stock-api/stock-api.service';
@@ -25,8 +26,8 @@ import { GlobalSerivceService } from 'src/app/routes/service/stock-api/global-se
 })
 export class StockmovementreportComponent implements OnInit {
 
-  dataset:[];
-list:any;
+  dataset: [];
+  list: any;
   confirmDropDatabaseDialogVisible = false;
   title: string;
   search: string;
@@ -34,7 +35,8 @@ list:any;
   displayMaximizable: boolean;
   breadcumbmodel: MenuItem[];
   licensekey: string;
-
+  vchDetailsResponse:any;
+  vchDetailsResponseTemp:any;
   btnFlag: ButtonFlag;
   currencyList: SelectItem[];
   currArry: string[] = [];
@@ -57,7 +59,7 @@ list:any;
   private hotRegisterer = new HotTableRegisterer();
   hotid = 'receiptVouchrEntry';
   constructor(private activatedroute: ActivatedRoute,
-    private service:StockApiService,
+    private stockApi: StockApiService,
     private messageService: MessageService,
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
@@ -69,22 +71,30 @@ list:any;
   }
 
   stockmovementrpt: Handsontable.GridSettings;
+  stockmovementrptDtls: Handsontable.GridSettings;
   stockMovementRptFormGroup: FormGroup;
+  stockMovementRptFormGroup1: FormGroup;
 
   cols: any;
-  ItemFromStockLedger:any;
+  ItemFromStockLedger: any;
   ngOnInit(): void {
-    this.ItemFromStockLedger =GlobalSerivceService.getDetailsByItemFromStockLedger;
-    console.log(GlobalSerivceService.getDetailsByItemFromStockLedger);
     this.cols = [
       { field: 'Item_Master_Item_ID', header: 'Item Id' },
       { field: 'Item_Master_Item_Name', header: 'Item Name' },
       { field: 'Item_Master_Part_No', header: 'Item Part No' },
       { field: 'Item_Master_Barcode', header: 'Item Barcode' }
     ];
-
     this.btnFlag = { edit: false, cancel: false, save: true, update: false, delete: false };
     this.initializeControls();
+    this.stockMovementRptFormGroup1 = new FormGroup({
+      stockMovementRptItemGroup: new FormControl(''),
+      stockMovementRptDetailType: new FormControl(''),
+      stockMovementRptDetails: new FormControl(''),
+      stockMovementRptSalesMan: new FormControl(''),
+      stockMovementRptItemName: new FormControl(''),
+      stockMovementRptLocation: new FormControl(''),
+      stockMovementRptJob: new FormControl('')
+    });
     this.stockMovementRptFormGroup = this.fb.group({
       ReceiptVoucherMasterSNO: [null],
       ReceiptVoucherMasterVoucherNo: [{ value: null, disabled: true }],
@@ -99,32 +109,57 @@ list:any;
     this.activatedroute.data.subscribe(data => {
       this.title = data.title;
     });
+    if (GlobalSerivceService.getDetailsByItemFromStockLedger != null) {
+      this.ItemFromStockLedger = GlobalSerivceService.getDetailsByItemFromStockLedger;
+      if (this.ItemFromStockLedger.length > 0) {
+        this.getStockVchDetails(this.ItemFromStockLedger[0].Item_Id);    ////////Changes Needed
+        setTimeout(()=>{
+          //this.stockMovementRptFormGroup1.value.stockMovementRptItemGroup = this.ItemFromStockLedger[0].Item_Id;
+          //this.stockMovementRptFormGroup1.value.stockMovementRptItemName = this.ItemFromStockLedger[0].Item_Name;
+          $("#itemGroup").val(this.ItemFromStockLedger[0].Item_Id);
+          $("#itemName").val(this.ItemFromStockLedger[0].Item_Name);
+        },300);
+      }
+    }
   }
-  GetItemList(){
+  getStockVchDetails(itemId:any){
+    console.log('Called');
+    this.stockApi.getStockVchDetails({"itemGroup":new String(itemId)}).subscribe(
+      data =>{
+        this.vchDetailsResponseTemp = data;
+        this.vchDetailsResponse = this.vchDetailsResponseTemp.Stock_Register;
+        console.log(this.vchDetailsResponse);
+      }
+    )
+  }
+  GetItemList() {
     console.log('called');
-    this.service.getAllItemsList().subscribe(respose=>{
-      this.list=respose;
+    this.stockApi.getAllItemsList().subscribe(respose => {
+      this.list = respose;
       console.log(this.list);
-      this.dataset=this.list.Item_Master;
-      this.displayMaximizable=true;
+      this.dataset = this.list.Item_Master;
+      this.displayMaximizable = true;
     },
-    error=>{
-      console.error("Data Not found...!");
-    });
+      error => {
+        console.error("Data Not found...!");
+      });
   }
-  GetItemDetails(id){
-    this.displayMaximizable=false;
-    this.service.getStockMovementDetailsRpt({ItemMasterItemId:id}).subscribe(respose=>{
-      this.list=respose;
-      this.dataset=this.list.ItemDetails;
+  GetItemDetails(id) {
+    this.displayMaximizable = false;
+    this.stockApi.getStockMovementDetailsRpt({ ItemMasterItemId: id }).subscribe(respose => {
+      this.list = respose;
+      this.dataset = this.list.ItemDetails;
       console.error(this.dataset);
     },
-    error=>{
-      console.error("Data Not found...!");
-    });  
+      error => {
+        console.error("Data Not found...!");
+      });
   }
   handleChange(e) {
     this.index = e.index;
+  }
+  get f1() {
+    return this.stockMovementRptFormGroup1.controls;
   }
   get f() {
     return this.stockMovementRptFormGroup.controls;
@@ -134,7 +169,126 @@ list:any;
       rowHeaders: true,
       viewportColumnRenderingOffset: 27,
       viewportRowRenderingOffset: 'auto',
-      colWidths: 150,
+      colWidths: [40,100,40,50],
+      minRows: 2,
+      width: '100%',
+      height: 150,
+      rowHeights: 23,
+      fillHandle: {
+        direction: 'vertical',
+        autoInsertRow: true
+      },
+      data: [],
+      minSpareRows: 1,
+      // allowInsertColumn: false,
+      allowInsertRow: true,
+      // allowRemoveColumn: false,
+      // allowRemoveRow: false,
+      // autoWrapRow: false,
+      // autoWrapCol: false,
+      stretchH: "all",
+      //  autoWrapRow: true,
+      // height: 487,
+      // maxRows: 22,
+      manualRowResize: true,
+      manualColumnResize: true,
+      hiddenColumns: {
+        columns: [8],
+        indicators: false
+      },
+      // rowHeaders: true,
+      columns: [
+        {
+          data: 'account',
+          type: 'autocomplete',
+          source: (query, callback) => {
+            callback(this.acctArry);
+          },
+          allowInvalid: false,
+          strict: false
+        },
+        {
+          data: 'credit',
+          type: 'numeric'
+        },
+        {
+          data: 'jobname',
+          type: 'autocomplete',
+          source: (query, callback) => {
+            callback(this.jobArry);
+          },
+          allowInvalid: false,
+          strict: false
+        },
+        {
+          data: 'costcenter',
+          type: 'dropdown',
+          source: (query, callback) => {
+            callback(this.costcenterArry);
+          },
+        },
+        {
+          data: 'narration',
+          type: 'text',
+        },
+        {
+          data: 'id',
+          type: 'numeric'
+        },
+        {
+          data: 'Temp',
+          type: 'numeric'
+
+        },
+        {
+          data: 'Temp',
+          type: 'numeric'
+
+        }
+      ],
+      colHeaders: [
+        this.translate.instant('A'),
+        this.translate.instant('B'),
+        this.translate.instant('C'),
+        this.translate.instant('D'),
+        this.translate.instant('E'),
+        this.translate.instant('F'),
+        this.translate.instant('G'),
+        this.translate.instant('H')
+      ],
+      manualRowMove: true,
+      manualColumnMove: true,
+      contextMenu: true,
+      filters: true,
+      dropdownMenu: true,
+    };
+
+    this.stockmovementrpt.beforeChangeRender = (change, source) => {
+      this.ColumnSum();
+
+    };
+    this.stockmovementrpt.afterRemoveRow = (index: number, amount: number) => {
+      // console.log('beforeRemove: index: %d, amount: %d', index, amount);
+      // console.log(this.hotRegisterer.getInstance(this.hotid).getDataAtRow(index));
+      this.ColumnSum();
+
+    };
+
+
+    this.stockmovementrpt.afterValidate = (isValid, value, row, prop) => {
+      if (!isValid) {
+        this.messageService.add({ severity: 'error', summary: 'Alert', detail: 'Invalid entry' });
+      }
+
+    };
+    this.initializeControlsDtls();
+  }
+  initializeControlsDtls() {
+    this.stockmovementrptDtls = {
+      rowHeaders: true,
+      viewportColumnRenderingOffset: 27,
+      viewportRowRenderingOffset: 'auto',
+      colWidths: [100,100,150,100,100,100,100,120,120],
       minRows: 2,
       width: '100%',
       height: 150,

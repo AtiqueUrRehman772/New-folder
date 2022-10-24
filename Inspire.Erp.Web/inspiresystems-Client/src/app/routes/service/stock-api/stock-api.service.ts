@@ -12,7 +12,6 @@ export class StockApiService {
     return this.http.post('http://localhost:53447/api/Stock/getStockLedgerReport','');
   }
   getFilteredStockLedgerRpt(payload:any){
-
     return this.http.post('http://localhost:53447/api/Stock/getFilteredStockLedgerRpt',payload);
   }
   getStockMovementDetailsRpt(payload:any){
@@ -20,6 +19,10 @@ export class StockApiService {
   }
   getDetailsByItem(payload:any){
     return this.http.post('http://localhost:53447/api/Stock/getDetailsByItem',payload);
+  }
+  getStockVchDetails(payload:any){
+    console.log(payload);
+    return this.http.post('http://localhost:53447/api/Stock/getStockVchDetails',payload);
   }
   getAllItemsList(){
     return this.http.get('http://localhost:53447/api/Stock/getAllItems');

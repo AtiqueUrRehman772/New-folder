@@ -258,12 +258,11 @@ export class StockLedgerReportComponent implements OnInit {
     };
     this.stockApi.getDetailsByItem(this.payload).subscribe(
       data => {
+        this.showItemList = false;
         this.response = data;
         this.dataset = this.response.Stock_Register;
-        console.log(this.dataset);
         GlobalSerivceService.getDetailsByItemFromStockLedger=this.response.Stock_Register;
-        this.gridHeader = "Showing Filtered Data";
-        this.showItemList = false;
+        this.router.navigateByUrl('/storewarehouse/stockmovementreport');
       }, (error) => {
         console.log(error);
       });
