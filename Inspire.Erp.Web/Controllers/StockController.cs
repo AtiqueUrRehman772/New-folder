@@ -194,21 +194,12 @@ namespace Inspire.Erp.Web.Controllers
             {
                 using (SqlConnection con = new SqlConnection(conn))
                 {
-                    string query = @"select Stock_Register_Trans_Type,Stock_Register_Ref_Voucher_No,Stock_Register_Voucher_Date,
-                         StockIn = Stock_Register_SIN,
-                         StockInAmt = Stock_Register_SIN * Stock_Register_Rate,
-                         StockOut = Stock_Register_Sout,
-                         StockOutAmt = Stock_Register_Sout * Stock_Register_Rate,
-                         StockLocation = Location_Master.Location_Master_Location_Name,
-                         Job = Job_Master.Job_Master_Job_Name,
-                         Stock_Register_Unit_ID,Stock_Register_Rate,Stock_Register_Material_ID from Stock_Register 
-                         left join Location_Master on Stock_Register.Stock_Register_Location_ID = Location_Master.Location_Master_Location_ID 
-                         left join Job_Master on Stock_Register.Stock_Register_Job_ID = Job_Master_Job_ID
-                         where  
-                         Stock_Register_Material_ID = " + obj.itemGroup;
+                    string query = "getStockVchDetails";
                     using (SqlCommand com = new SqlCommand(query, con))
                     {
                         con.Open();
+                        com.CommandType = CommandType.StoredProcedure;
+                        com.Parameters.AddWithValue("itemGroup", obj.itemGroup);
                         using (SqlDataAdapter customerDA = new SqlDataAdapter())
                         {
                             customerDA.SelectCommand = com;
