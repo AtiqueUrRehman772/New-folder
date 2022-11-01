@@ -5,8 +5,8 @@
 </div>
 <p-toolbar>
     <div class="ui-toolbar-group-left">
-        <button pButton type="button" [disabled]="btnFlag.new" label="New" icon="pi pi-plus"
-            (click)="createNew()" class="ui-button-info"></button>
+        <button pButton type="button" [disabled]="btnFlag.new" label="New" icon="pi pi-plus" (click)="createNew()"
+            class="ui-button-info"></button>
         <button pButton type="button" [disabled]="btnFlag.edit" label="Edit" icon="fa fa-pencil"
             class="ui-button-success"></button>
         <button pButton type="button" [disabled]="btnFlag.cancel" class="ui-button-danger" label="Cancel"
@@ -29,9 +29,9 @@
         <p-checkbox label="Suppress Allocation in Print"></p-checkbox>
     </div>
 </p-toolbar>
-<div class="ui-grid">
+<div class="ui-grid" [formGroup]='StockTransferGroup'>
     <div class="ui-grid-col-9">
-        <p-panel [formGroup]='StockTransferGroup'>
+        <p-panel>
             <p-header>
                 {{'Stock Transfer Details'| translate}}
             </p-header>
@@ -88,7 +88,8 @@
             <div class="p-grid inputGroup">
                 <label class="p-col-2">{{'Narrration'| translate}}</label>
                 <div class="ui-grid-col-10">
-                    <textarea class="p-col-2" style="min-height:80px;width:100%;margin-top:5px;" pInputTextarea></textarea>
+                    <textarea class="p-col-2" style="min-height:80px;width:100%;margin-top:5px;"
+                        pInputTextarea></textarea>
                 </div>
             </div>
         </p-panel>
@@ -101,14 +102,18 @@
             <label>{{'Customer :'| translate}}</label>
             <div class="p-lg-10">
                 <div class="ui-inputgroup">
-                    <input class="p-lg-10" pInputText />
+                    <input class="p-lg-10" formControlName="CustomerName" name="CustomerName"
+                        [(ngModel)]="selectedCustomer" pInputText />
                     <button pButton type="button" (click)="showAllCustomers()" icon="pi pi-search"></button>
                 </div>
             </div>
-            <label>{{'Description :'| translate}}</label>
+            <label>{{'Department :'| translate}}</label>
             <div class="p-lg-10">
                 <div class="ui-inputgroup">
-                    <input class="p-lg-12" pInputText disabled />
+                    <!-- <input class="p-lg-12" pInputText [disabled]="customerDesc" /> -->
+                    <p-dropdown style="width: 100%;" [options]="departmentList" formControlName="Department"
+                        optionLabel="Department_Master_Department_Name">
+                    </p-dropdown>
                 </div>
             </div>
             <div class="p-lg-10">
@@ -162,9 +167,8 @@
                     </th>
                 </tr>
             </ng-template>
-
             <ng-template pTemplate="body" let-item>
-                <tr>
+                <tr [style]="{'cursor':'pointer'}" (click)="selectCustomer(item.customerMasterCustomerName)">
                     <td>{{item.customerMasterCustomerTitle}}</td>
                     <td>{{item.customerMasterCustomerName}}</td>
                     <td>{{item.customerMasterCustomerEmail}}</td>

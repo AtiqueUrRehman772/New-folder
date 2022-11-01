@@ -9,10 +9,11 @@ import { SaleRoutingModule } from './sale-routing.module';
 import { CustomerquotationComponent } from './customerquotation/customerquotation.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HotTableModule } from '@handsontable/angular';
+import { SalesVoucherComponent } from './sales-voucher/sales-voucher.component';
 
 
 @NgModule({
-  declarations: [CustomerquotationComponent],
+  declarations: [CustomerquotationComponent, SalesVoucherComponent],
   imports: [
     CommonModule,
     SaleRoutingModule,

@@ -284,7 +284,7 @@ export class AppMenuComponent implements OnInit {
               { label: 'Customer Wise Sales Report', icon: 'fa fa-fw fa-sign-in', routerLink: ['/utils'] },
               { label: 'Salesman Wise Outstanding Report', icon: 'fa fa-fw fa-sign-in', routerLink: ['/utils'] },
               { label: 'Sales Men Wise Sales Report', icon: 'fa fa-fw fa-sign-in', routerLink: ['/utils'] },
-              { label: 'Sales Report', icon: 'fa fa-fw fa-sign-in', routerLink: ['/utils'] },
+              { label: 'Sales Report', icon: 'fa fa-fw fa-sign-in', routerLink: ['sale/salesvoucher'] },
               { label: 'Sales Summary by Date', icon: 'fa fa-fw fa-sign-in', routerLink: ['/utils'] }
             ]
           },

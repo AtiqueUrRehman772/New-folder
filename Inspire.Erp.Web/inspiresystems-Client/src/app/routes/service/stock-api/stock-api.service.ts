@@ -30,4 +30,7 @@ export class StockApiService {
   getAllJobs(){
     return this.http.get('http://localhost:53447/api/Job/GetAllJob');
   }
+  getAllDepartments(){
+    return this.http.get('http://localhost:53447/api/Stock/getAllDepartments');
+  }
 }

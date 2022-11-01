@@ -35,6 +35,10 @@ export class StockLedgerReportComponent implements OnInit {
     private stockApi: StockApiService) {
     this.licensekey = defaults.hotlicensekey;
     this.gridHeader = "No Data";
+    this.selectedItem = {
+      Item_Master_Item_ID: "",
+      Item_Master_Item_Name: ""
+    }
     this.btnFlag = { edit: true, cancel: true, save: true, new: true, delete: true, list: false };
   }
   response: any;
@@ -57,23 +61,24 @@ export class StockLedgerReportComponent implements OnInit {
   SoutAmount = [];
   BalQty = [];
   BalAmount = [];
-  locationList:any;
-  jobList:any;
-  brandList:any;
+  locationList: any;
+  jobList: any;
+  brandList: any;
   title: string;
   dataset: any;
   payload: any;
   subtitle: string;
-  gridHeader:string;
+  gridHeader: string;
   displayMaximizable: boolean;
-  itemGroupList:any;
-  showItemGroupList:boolean;
-  showItemList:boolean;
-  showLocationList:boolean;
-  showJobList:boolean;
-  showBrandList:boolean;
-  itemList:any;
-  selectedItem:item;
+  itemGroupList: any;
+  showItemGroupList: boolean;
+  showItemList: boolean;
+  showLocationList: boolean;
+  showJobList: boolean;
+  showBrandList: boolean;
+  itemList: any;
+  selectedItem: item;
+  //selectedItemName:string;
   breadcumbmodel: MenuItem[];
   btnlabel: string = 'Submit';
   dataJson: string;
@@ -82,15 +87,21 @@ export class StockLedgerReportComponent implements OnInit {
   fileName: string = '';
   ItemFormGroup: FormGroup;
   licensekey: string;
-  cols:Array<any>;
-  jobCols:Array<any>;
-  brandCols:Array<any>;
-  tempResponse:any;
+  cols: Array<any>;
+  jobCols: Array<any>;
+  brandCols: Array<any>;
+  tempResponse: any;
+  datedFrom: any;
+  datedTo: any;
+  selectedLocation:any;
+  selectedJob:any;
+  moveToStockMovement:boolean;
 
   ngOnInit(): void {
     this.showLocationList = false;
     this.showJobList = false;
     this.showBrandList = false;
+    this.moveToStockMovement = false;
     this.breadcumbmodel = this.router.url.slice(1).split('/').map((k) => ({ label: k }));
     this.activatedroute.data.subscribe(data => {
       this.title = data.title;
@@ -109,50 +120,58 @@ export class StockLedgerReportComponent implements OnInit {
       DetailsType: new FormControl('Details', Validators.required),
       DateType: new FormControl('Monthly', Validators.required)
     });
-    this.cols=[
-      {field:"Item_Master_Item_ID",header:"Item Code"},
-      {field:"Item_Master_Item_Name",header:"Item Name"},
-      {field:"Item_Master_Bar_Code",header:"Bar Code"},
-      {field:"Item_Master_Part_No",header:"Part No."},
-      {field:"Item_Master_Stock",header:"Stock"},
+    this.cols = [
+      { field: "Item_Master_Item_ID", header: "Item Code" },
+      { field: "Item_Master_Item_Name", header: "Item Name" },
+      { field: "Item_Master_Bar_Code", header: "Bar Code" },
+      { field: "Item_Master_Part_No", header: "Part No." },
+      { field: "Item_Master_Stock", header: "Stock" },
     ];
-    this.jobCols=[
-      {field:"Name",header:"Job Name"},
-      {field:"JobNumber",header:"Job No."}
+    this.jobCols = [
+      { field: "Name", header: "Job Name" },
+      { field: "JobNumber", header: "Job No." }
     ];
-    this.brandCols=[
-      {field:"Name",header:"Brand Name"}
-    ]
+    this.brandCols = [
+      { field: "Name", header: "Brand Name" }
+    ];
+    this.datedFrom = new Date(new Date().setFullYear(new Date().getFullYear() - 5));
+    this.datedTo = new Date();
   }
-  showItemGroups(){
+  showItemGroups() {
     this.showItemGroupList = true;
     this.itemGroupList = [
-      {itemId:'851',itemName:'Diesel'},
-      {itemId:'311',itemName:'Garnet'},
-      {itemId:'127',itemName:'General'},
-      {itemId:'472',itemName:'Paints'}
+      { itemId: '851', itemName: 'Diesel' },
+      { itemId: '311', itemName: 'Garnet' },
+      { itemId: '127', itemName: 'General' },
+      { itemId: '472', itemName: 'Paints' }
     ];
   }
-  showItems(){
+  showItems() {
     this.stockApi.getAllItemsList().subscribe(
-      data=>{
+      data => {
         this.tempResponse = data;
         this.itemList = this.tempResponse.Item_Master;
       }
     );
     this.showItemList = true;
   }
-  toggleActive(itemId){
+  toggleActive(itemId) {
     this.itemGroupList.forEach(element => {
-      $("#"+element.itemId).removeClass('selected');
+      $("#" + element.itemId).removeClass('selected');
     });
-    $("#"+itemId).addClass('selected');
+    $("#" + itemId).addClass('selected');
   }
-  toggleActiveLoc(itemId){
+  toggleActiveLoc(itemId,selectedItemName) {
     this.locationList.forEach(element => {
-      $("#"+element.locationMasterLocationId).removeClass('selected');
+      $("#" + element.locationMasterLocationId).removeClass('selected');
     });
-    $("#"+itemId).addClass('selected');
+    $("#" + itemId).addClass('selected');
+    this.selectedLocation = selectedItemName;
+    this.showLocationList = false;
+  }
+  selectJob(jobName){
+    this.selectedJob = jobName;
+    this.showJobList = false;
   }
   clearForm() {
     this.ItemFormGroup.controls['ItemGroup'].setValue('');
@@ -180,7 +199,7 @@ export class StockLedgerReportComponent implements OnInit {
   getFilteredStockLedgerRpt() {
     this.btnFlag = { edit: false, cancel: false, save: false, new: false, delete: false, list: false };
     this.payload = {
-      itemGroup: this.ItemFormGroup.value.ItemGroup,
+      itemGroup: new String(this.ItemFormGroup.value.ItemGroup),
       itemName: this.ItemFormGroup.value.ItemName,
       dateFrom: this.ItemFormGroup.value.DateFrom,
       dateTo: this.ItemFormGroup.value.DateTo,
@@ -216,34 +235,32 @@ export class StockLedgerReportComponent implements OnInit {
       }
     });
   }
-  getAllLocations(){
+  getAllLocations() {
     this.masterApi.GetAllLocation().subscribe(
-      data =>{
+      data => {
         this.locationList = data;
-        console.log(this.locationList);
         this.showLocationList = true;
       }
     );
   }
-  getAllJobs(){
+  getAllJobs() {
     this.masterApi.GetAllJob().subscribe(
-      data =>{
+      data => {
         this.jobList = data;
-        console.log(this.jobList);
         this.showJobList = true;
       }
     );
   }
-  getAllBrands(){
+  getAllBrands() {
     this.masterApi.GetAllBrand().subscribe(
-      data =>{
+      data => {
         this.brandList = data;
         console.log(this.brandList);
         this.showBrandList = true;
       }
     );
   }
-  getDetailsByItem(item_Id:any){
+  getDetailsByItem(item_Id: any) {
     this.btnFlag = { edit: false, cancel: false, save: false, new: false, delete: false, list: false };
     this.payload = {
       itemGroup: new String(item_Id),
@@ -261,11 +278,18 @@ export class StockLedgerReportComponent implements OnInit {
         this.showItemList = false;
         this.response = data;
         this.dataset = this.response.Stock_Register;
-        GlobalSerivceService.getDetailsByItemFromStockLedger=this.response.Stock_Register;
+        GlobalSerivceService.getDetailsByItemFromStockLedger = this.response.Stock_Register;
         this.router.navigateByUrl('/storewarehouse/stockmovementreport');
       }, (error) => {
         console.log(error);
       });
+  }
+  selectItem(item: any) {
+    console.log(item);
+    this.selectedItem = item;
+    this.ItemFormGroup.value.itemGroup = item.Item_Master_Item_ID;
+    this.ItemFormGroup.value.itemName = item.Item_Master_Item_Name;
+    this.showItemList = false;
   }
   // onFileChange(evt: any) {
   //   this.exceltoJsonConverter(evt);
@@ -310,6 +334,16 @@ export class StockLedgerReportComponent implements OnInit {
       fillHandle: {
         direction: 'vertical',
         autoInsertRow: true
+      },
+      afterOnCellMouseDown: (event, coords, TD) => {
+        console.log(TD.innerText);
+        if(this.moveToStockMovement){
+          this.getDetailsByItem(TD.innerText);
+        }
+        this.moveToStockMovement = true;
+        setTimeout(()=>{
+          this.moveToStockMovement = false;
+        },1000);
       },
       data: [],
       minSpareRows: 1,
@@ -500,6 +534,6 @@ export class StockLedgerReportComponent implements OnInit {
   }
 }
 interface item {
-  itemId: string,
-  itemName: string
+  Item_Master_Item_ID: string,
+  Item_Master_Item_Name: string
 }

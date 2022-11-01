@@ -1,4 +1,10 @@
 {
-  "ExpandedNodes": [],
+  "ExpandedNodes": [
+    "",
+    "\\Inspire.Erp.Application",
+    "\\Inspire.Erp.Application\\Account",
+    "\\Inspire.Erp.Application\\Account\\Implementations"
+  ],
+  "SelectedNode": "\\Inspire.Erp.Application\\Account\\Implementations\\StoreWareHouse.cs",
   "PreviewInSolutionExplorer": false
 }

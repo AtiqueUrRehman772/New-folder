@@ -48,6 +48,7 @@ export class StockTransferComponent implements OnInit {
   breadcumbmodel: MenuItem[];
   jobList:Array<any>;
   locationList:Array<any>;
+  departmentList:any;
   customerList:Array<any>;
   dataset:any;
   selectedJob:string;
@@ -59,6 +60,8 @@ export class StockTransferComponent implements OnInit {
   StockTransferGroup: FormGroup;
   stockTransfer: Handsontable.GridSettings;
   title:string;
+  selectedCustomer:string;
+customerDesc:boolean;
 
   ngOnInit(): void {
     this.breadcumbmodel = this.router.url.slice(1).split('/').map((k) => ({ label: k }));
@@ -72,8 +75,12 @@ export class StockTransferComponent implements OnInit {
       VoucherJob : new FormControl('',Validators.required),
       SelectedJob : new FormControl('',Validators.required),
       LocationFrom : new FormControl('',Validators.required),
-      LocationTo : new FormControl('',Validators.required)
+      LocationTo : new FormControl('',Validators.required),
+      CustomerName : new FormControl('',Validators.required),
+      Department : new FormControl('',Validators.required)
     });
+    this.selectedCustomer = "";
+    this.customerDesc = true;
     this.cols=[
       {field:"customerTitle",header:"Title"},
       {field:"customerName",header:"Name"},
@@ -81,6 +88,11 @@ export class StockTransferComponent implements OnInit {
       {field:"customerContact",header:"Contact No."}
     ];
     this.initializeControls();
+  }
+  selectCustomer(customerName){
+    this.selectedCustomer = customerName;
+    this.showCustomerList = false;
+    this.customerDesc = false
   }
   hotid = 'stockLedgerReport';
   initializeControls() {
@@ -179,13 +191,11 @@ export class StockTransferComponent implements OnInit {
       }
 
     };
-
-
-
   }
   createNew(){
     this.getAllJobs();
     this.getAllLocations();
+    this.getAllDepartments();
     this.btnFlag.cancel = false;
     this.btnFlag.edit = false;
     this.btnFlag.save = false;
@@ -201,7 +211,14 @@ export class StockTransferComponent implements OnInit {
     this.masterApi.GetAllLocation().subscribe(
       data =>{
         this.locationList = data;
-        console.log(this.locationList);
+      }
+    );
+  }
+  getAllDepartments(){
+    this.stockApi.getAllDepartments().subscribe(
+      data =>{
+        this.response = data;
+        this.departmentList = this.response.Department_Master;
       }
     );
   }

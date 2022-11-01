@@ -34,7 +34,7 @@
                 <label class="p-col-1 p-md-1" for="itemGroup">{{'Item Group'| translate}}</label>
                 <div class="p-col-2 p-md-2">
                     <div style="display: inline-block;" class="ui-inputgroup">
-                        <input pInputText formControlName='ItemGroup' #itemGroup id="itemGroup">
+                        <input pInputText formControlName='ItemGroup' #itemGroup id="itemGroup" [(ngModel)]="selectedItem.Item_Master_Item_ID">
                         <button pButton type="button" (click)="showItemGroups()" icon="pi pi-search"></button>
                     </div>
                     <div class="error" *ngIf="f.ItemGroup.touched && f.ItemGroup.invalid">
@@ -43,7 +43,7 @@
                 </div>
                 <label class="p-col-1 p-md-1" for="dateFrom">{{'Date-From' | translate}}</label>
                 <div class="p-col-2 p-md-2">
-                    <p-calendar class="w-100" useUtc formControlName='DateFrom' id="dateFrom">
+                    <p-calendar class="w-100" useUtc [(ngModel)]="datedFrom" formControlName='DateFrom' id="dateFrom">
                     </p-calendar>
                     <div class="error" *ngIf="f.DateFrom.touched && f.DateFrom.invalid">
                         <span>Date-From is Mandatory Field*</span>
@@ -51,7 +51,7 @@
                 </div>
                 <label class="p-col-1 p-md-1" for="dateTo">{{'Date-To' | translate}}</label>
                 <div class="p-col-2 p-md-2">
-                    <p-calendar class="w-100" useUtc formControlName='DateTo' id="dateTO">
+                    <p-calendar class="w-100" useUtc [(ngModel)]="datedTo" formControlName='DateTo' id="dateTO">
                     </p-calendar>
                     <div class="error" *ngIf="f.DateTo.touched && f.DateTo.invalid">
                         <span>Date-To is Mandatory Field*</span>
@@ -72,7 +72,7 @@
                 <label class="p-col-6 p-md-12 p-lg-1" for="itemName">{{'Item' | translate}}</label>
                 <div class="p-col-6 p-md-12 p-lg-2 p-1">
                     <div style="display: inline-block;" class="ui-inputgroup">
-                        <input pInputText formControlName="ItemName" id="itemName">
+                        <input pInputText formControlName="ItemName" id="itemName" [(ngModel)]="selectedItem.Item_Master_Item_Name">
                         <button pButton type="button" icon="pi pi-search" (click)="showItems()"></button>
                     </div>
                     <div class="error" *ngIf="f.ItemName.touched && f.ItemName.invalid">
@@ -82,7 +82,7 @@
                 <label class="p-col-6 p-md-12 p-lg-1" for="location">{{'Location' | translate}}</label>
                 <div class="p-col-6 p-md-12 p-lg-2 p-1">
                     <div style="display: inline-block;" class="ui-inputgroup">
-                        <input pInputText formControlName="Location" id="location">
+                        <input pInputText [(ngModel)]="selectedLocation" formControlName="Location" id="location">
                         <button pButton type="button" icon="pi pi-search" (click)="getAllLocations()"></button>
                     </div>
                     <div class="error" *ngIf="f.Location.touched && f.Location.invalid">
@@ -92,7 +92,7 @@
                 <label class="p-col-6 p-md-12 p-lg-1" for="job">{{'Job' | translate}}</label>
                 <div class="p-col-6 p-md-12 p-lg-2 p-1">
                     <div style="display: inline-block;" class="ui-inputgroup">
-                        <input pInputText formControlName="Job" id="job">
+                        <input pInputText [(ngModel)]="selectedJob" formControlName="Job" id="job">
                         <button pButton type="button" icon="pi pi-search" (click)="getAllJobs()"></button>
                     </div>
                     <div class="error" *ngIf="f.Job.touched && f.Job.invalid">
@@ -192,7 +192,7 @@
                 placeholder="Type to Search" />
         </div>
         <div class="card">
-            <span *ngFor="let item of locationList" (click)="toggleActiveLoc(item.locationMasterLocationId)">
+            <span *ngFor="let item of locationList" (click)="toggleActiveLoc(item.locationMasterLocationId,item.locationMasterLocationName)">
                 <div class="customListHover" id="{{item.locationMasterLocationId}}"><label>{{item.locationMasterLocationName}}</label></div>
             </span>
         </div>
@@ -227,7 +227,7 @@
 
             <ng-template pTemplate="body" let-item>
                 <tr>
-                    <td>{{item.jobMasterJobName}}</td>
+                    <td [style]="{'cursor':'pointer'}" (click)="selectJob(item.jobMasterJobName)">{{item.jobMasterJobName}}</td>
                     <td>{{item.jobMasterJobNumber}}</td>
                 </tr>
             </ng-template>
@@ -295,12 +295,13 @@
                     </th>
                 </tr>
             </ng-template>
-
+<!-- (click)="getDetailsByItem(item.Item_Master_Item_ID)" -->
             <ng-template pTemplate="body" let-item>
                 <tr>
                     <td>{{item.Item_Master_Item_ID}}</td>
                     <td [style]="{'cursor':'pointer'}"
-                     (click)="getDetailsByItem(item.Item_Master_Item_ID)">
+
+                     (click)="selectItem(item)">
                      {{item.Item_Master_Item_Name}}</td>
                     <td>{{item.Item_Master_Barcode}}</td>
                     <td>{{item.Item_Master_Part_No}}</td>

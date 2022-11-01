@@ -33,23 +33,17 @@ namespace Inspire.Erp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IStoreWareHouse, StoreWareHouse>();
             services.AddControllers();
             services.AddApplication();
             services.AddInfrastructure(Configuration);
-
-            //services.AddTransient<IStockMasterService, StockMasterService>();
-
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
             });
-
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-
-
+            services.AddTransient<IStoreWareHouse, StoreWareHouse>();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllHeaders",

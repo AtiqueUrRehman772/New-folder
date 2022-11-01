@@ -8,13 +8,14 @@ namespace Inspire.Erp.Application.Account.Interfaces
 {
     public interface IStoreWareHouse
     {
-        Task<string> getStockLedgerReport();
-        Task<string> getStockMovementRpt();
-        Task<string> getAllItems();
-        Task<string> getAllBrands();
-        Task<string> getFilteredStockLedgerRpt(StockLedgerReportModel obj);
-        Task<string> getStockMovementDetailsRpt(ItemMasterViewModel id);
-        Task<string> getDetailsByItem(StockLedgerReportModel obj);
-        Task<string> getStockVchDetails(StockLedgerReportModel obj);
+        public Task<string> getStockLedgerReport();
+        public Task<string> getStockMovementRpt();
+        public Task<string> getAllItems();
+        public Task<string> getAllBrands();
+        public Task<string> getFilteredStockLedgerRpt(StockLedgerReportModel obj);
+        public Task<string> getStockMovementDetailsRpt(ItemMasterViewModel id);
+        public Task<string> getDetailsByItem(StockLedgerReportModel obj);
+        public Task<string> getStockVchDetails(StockLedgerReportModel obj);
+        public Task<string> getAllDepartments();
     }
 }

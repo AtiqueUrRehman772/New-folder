@@ -15,13 +15,11 @@ namespace Inspire.Erp.Application.Account.Implementations
     public class StoreWareHouse: IStoreWareHouse
     {
         private static string conn;
-        private readonly InspireErpDBContext context;
         private readonly IConfiguration configuration;
-        public StoreWareHouse(InspireErpDBContext context, IConfiguration _configuration)
+        public StoreWareHouse(IConfiguration _configuration)
         {
             configuration = _configuration;
             conn = configuration.GetConnectionString("db_con");
-            this.context = context;
         }
         public async Task<string> getStockLedgerReport() {
             try
@@ -108,6 +106,35 @@ namespace Inspire.Erp.Application.Account.Implementations
                 throw;
             }
         }
+        public async Task<string> getAllDepartments()
+        {
+            try
+            {
+                string query = "getAllDepartments";
+                using (SqlConnection con = new SqlConnection(conn))
+                {
+                    using (SqlCommand com = new SqlCommand(query, con))
+                    {
+                        con.Open();
+                        com.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
+                        {
+                            customerDA.SelectCommand = com;
+                            using (DataSet customerDS = new DataSet())
+                            {
+                                customerDA.Fill(customerDS, "Department_Master");
+                                con.Close();
+                                return JsonConvert.SerializeObject(customerDS);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public async Task<string> getAllItems()
         {
             try
@@ -148,6 +175,10 @@ namespace Inspire.Erp.Application.Account.Implementations
                     {
                         con.Open();
                         com.CommandType = CommandType.StoredProcedure;
+                        com.Parameters.AddWithValue("itemGroup", obj.itemGroup);
+                        com.Parameters.AddWithValue("itemName", obj.itemName);
+                        com.Parameters.AddWithValue("job", obj.job);
+                        com.Parameters.AddWithValue("location", obj.location);
                         com.Parameters.AddWithValue("dateFrom", obj.dateFrom);
                         com.Parameters.AddWithValue("dateTo", obj.dateTo);
                         using (SqlDataAdapter customerDA = new SqlDataAdapter())
@@ -161,6 +192,24 @@ namespace Inspire.Erp.Application.Account.Implementations
                             }
                         }
                     }
+                    //string query = "getFilteredStockLedgerRpt";
+                    //using (SqlCommand com = new SqlCommand(query, con))
+                    //{
+                    //    con.Open();
+                    //    com.CommandType = CommandType.StoredProcedure;
+                    //    com.Parameters.AddWithValue("dateFrom", obj.dateFrom);
+                    //    com.Parameters.AddWithValue("dateTo", obj.dateTo);
+                    //    using (SqlDataAdapter customerDA = new SqlDataAdapter())
+                    //    {
+                    //        customerDA.SelectCommand = com;
+                    //        using (DataSet customerDS = new DataSet())
+                    //        {
+                    //            customerDA.Fill(customerDS, "Stock_Register");
+                    //            con.Close();
+                    //            return JsonConvert.SerializeObject(customerDS);
+                    //        }
+                    //    }
+                    //}
                 }
             }
             catch (Exception)

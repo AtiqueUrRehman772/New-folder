@@ -41,6 +41,8 @@ namespace Inspire.Erp.Application
             services.AddScoped<IChartofAccountsService, ChartofAccountsService>();
             services.AddScoped<IPaymentVoucherService, PaymentVoucherService>();
             services.AddScoped<IReceiptVoucherService, ReceiptVoucherService>();
+            services.AddScoped<IReceiptVoucherService, ReceiptVoucherService>();
+            services.AddScoped<IStoreWareHouse, StoreWareHouse>();
             return services;
         }
     }

@@ -123,12 +123,10 @@ export class StockmovementreportComponent implements OnInit {
     }
   }
   getStockVchDetails(itemId:any){
-    console.log('Called');
     this.stockApi.getStockVchDetails({"itemGroup":new String(itemId)}).subscribe(
       data =>{
         this.vchDetailsResponseTemp = data;
         this.vchDetailsResponse = this.vchDetailsResponseTemp.Stock_Register;
-        console.log(this.vchDetailsResponse);
       }
     )
   }

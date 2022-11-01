@@ -67,7 +67,7 @@ namespace Inspire.Erp.Web.Controllers
         {
             try
             {
-                string response = await _sw.getStockLedgerReport();
+                string response = await _sw.getStockMovementDetailsRpt(id);
                 return response;
             }
             catch (System.Exception)
@@ -80,7 +80,7 @@ namespace Inspire.Erp.Web.Controllers
         {
             try
             {
-                string response = await _sw.getStockLedgerReport();
+                string response = await _sw.getDetailsByItem(obj);
                 return response;
             }
             catch (System.Exception)
@@ -93,7 +93,7 @@ namespace Inspire.Erp.Web.Controllers
         {
             try
             {
-                string response = await _sw.getStockLedgerReport();
+                string response = await _sw.getStockVchDetails(obj);
                 return response;
             }
             catch (System.Exception)
@@ -121,6 +121,20 @@ namespace Inspire.Erp.Web.Controllers
             try
             {
                 string response = await _sw.getAllBrands();
+                return response;
+            }
+            catch (System.Exception ex)
+            {
+                return ex.Message.ToString();
+                throw;
+            }
+        }
+        [HttpGet("getAllDepartments")]
+        public async Task<string> getAllDepartments()
+        {
+            try
+            {
+                string response = await _sw.getAllDepartments();
                 return response;
             }
             catch (System.Exception ex)
