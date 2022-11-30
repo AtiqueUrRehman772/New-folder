@@ -64,13 +64,18 @@
                                 <textarea style="min-height:80px;width:100%;margin-top:5px;"
                                     formControlName="DamageEntryDesc" pInputTextarea></textarea>
                             </div>
+                            <div class="p-lg-10">
+                                <button pButton class="ui-button-info" [label]='"Submit"| translate' (click)="submitDamageEntry()"></button>
+                                <button pButton class="ui-button-warning" [label]='"Clear"| translate'></button>
+                            </div>
                         </div>
                         <div class="grid">
                             <hot-table [hotId]="hotid" height="auto" [data]="dataset" [licenseKey]="licensekey"
                                 [settings]="stockmovementrpt">
                                 <hot-column data="Item_Master_Item_ID" [readOnly]="true" title="Code"></hot-column>
-                                <hot-column data="Item_Master_Item_Name" title="Material Name"></hot-column>
                                 <hot-column data="Item_Master_Item_Type" title="Part No"></hot-column>
+                                <hot-column data="Item_Master_Item_Name" title="Material Name"></hot-column>
+                                <hot-column data="Item_Master_Unit_Price" title="Unit_Price"></hot-column>
                                 <hot-column data="Quantity" title="Quantity"></hot-column>
                             </hot-table>
                         </div>

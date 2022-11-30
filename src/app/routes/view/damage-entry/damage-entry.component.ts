@@ -24,7 +24,7 @@ import { StockApiService } from 'src/app/routes/service/stock-api/stock-api.serv
 })
 export class DamageEntryComponent implements OnInit {
 
-  dataset: [];
+  dataset: any;
   list: any;
   confirmDropDatabaseDialogVisible = false;
   title: string;
@@ -38,6 +38,7 @@ export class DamageEntryComponent implements OnInit {
   currencyList: SelectItem[];
   currArry: string[] = [];
   voucherDate: any;
+  checkNull: boolean = true;
 
   accountArray: ChartofAccounts[] = [];
   acctArry: string[] = [];
@@ -101,11 +102,11 @@ export class DamageEntryComponent implements OnInit {
       this.title = data.title;
     });
   }
-  VoucherNumber:any;
-  getVoucherNumber(){
-    this.service.getVoucherNumber().subscribe(response=>{
-      this.VoucherNumber=response;
-      this.VoucherNumber=this.VoucherNumber.Stock_Register[0].Vouchers_Numbers_V_NO;
+  VoucherNumber: any;
+  getVoucherNumber() {
+    this.service.getVoucherNumber().subscribe(response => {
+      this.VoucherNumber = response;
+      this.VoucherNumber = parseInt(this.VoucherNumber.Stock_Register[0].Vouchers_Numbers_V_NO_NU) + 1;
     });
   }
   GetItemList() {
@@ -123,8 +124,8 @@ export class DamageEntryComponent implements OnInit {
     this.displayMaximizable = false;
     this.service.getItemDetailsById({ ItemMasterItemId: id }).subscribe(respose => {
       this.list = respose;
-      console.error(this.list);
       this.dataset = this.list.ItemDetails;
+      this.checkNull = false;
     },
       error => {
         console.error("Data Not found...!");
@@ -150,7 +151,7 @@ export class DamageEntryComponent implements OnInit {
       viewportColumnRenderingOffset: 27,
       viewportRowRenderingOffset: 'auto',
       colWidths: 150,
-      minRows: 10,
+      minRows: 3,
       width: '100%',
       height: 300,
       rowHeights: 23,
@@ -159,7 +160,8 @@ export class DamageEntryComponent implements OnInit {
         autoInsertRow: true
       },
       afterOnCellMouseDown: (event, coords, TD) => {
-        this.GetItemList();
+        if (coords.col === 0)
+          this.GetItemList();
       },
       data: [],
       minSpareRows: 1,
@@ -272,8 +274,44 @@ export class DamageEntryComponent implements OnInit {
         .reduce((sum, current) => sum + current.credit, 0);
     }
   }
-  submitDamageEntry(){
-
+  submitDamageEntry() {
+    if (this.checkNull) {
+      this.messageService.add({
+        severity: 'error',
+        detail: 'Please enter all required details',
+        closable: true
+      });
+    }
+    else {
+      this.voucherDate = new Date();
+      this.voucherDate = this.voucherDate.getUTCFullYear() + '-' +
+        ('00' + (this.voucherDate.getUTCMonth() + 1)).slice(-2) + '-' +
+        ('00' + this.voucherDate.getUTCDate()).slice(-2) + ' ' +
+        ('00' + this.voucherDate.getUTCHours()).slice(-2) + ':' +
+        ('00' + this.voucherDate.getUTCMinutes()).slice(-2) + ':' +
+        ('00' + this.voucherDate.getUTCSeconds()).slice(-2);
+      let payload = {
+        materialId: String(this.dataset[0].Item_Master_Item_ID),
+        stockItemName: String(this.dataset[0].Item_Master_Item_Name),
+        stockItemType: String(this.dataset[0].Item_Master_Item_Type),
+        locationFrom: String(this.dataset[0].Item_Master_Location_ID),
+        partNo: String(this.dataset[0].Item_Master_Part_No),
+        unitId: String(this.dataset[0].Item_Master_Unit_ID),
+        stockRate: String(this.dataset[0].Item_Master_Unit_Price),
+        stockQuantity: String(this.dataset[0].Quantity),
+        voucherDate: String(this.voucherDate),
+        voucherNo: String(this.VoucherNumber),
+        narration: String(this.stockMovementRptFormGroup.value.DamageEntryDesc)
+      }
+      this.service.submitDamageEntry(payload).subscribe((data) => {
+        console.log(data);
+      });
+      this.messageService.add({
+        severity: 'success',
+        detail: 'Data saved successfully !',
+        closable: true
+      });
+    }
   }
 }
 interface ButtonFlag {

@@ -223,7 +223,6 @@ export class StockTransferComponent implements OnInit {
     this.stockApi.getItemDetailsById({ ItemMasterItemId: id }).subscribe(respose => {
       this.itemList = respose;
       this.dataset = this.itemList.ItemDetails;
-      console.log(this.dataset);
     },
       error => {
         console.error("Data Not found...!");
