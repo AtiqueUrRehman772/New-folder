@@ -9,11 +9,13 @@ using Inspire.Erp.Application.Account.Implementations;
 using Inspire.Erp.Application.Account.Interfaces;
 using Inspire.Erp.Application.Master.Implementations;
 using Inspire.Erp.Application.Master.Interfaces;
+using Inspire.Erp.Domain.Entities;
 using Inspire.Erp.Infrastructure;
 using Inspire.Erp.Web.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,6 +38,8 @@ namespace Inspire.Erp.Web
             services.AddControllers();
             services.AddApplication();
             services.AddInfrastructure(Configuration);
+            services.AddDbContext<InspireErpDBContext>(options =>
+           options.UseSqlServer(Configuration.GetConnectionString("db_con")));
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -43,7 +47,6 @@ namespace Inspire.Erp.Web
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-            services.AddTransient<IStoreWareHouse, StoreWareHouse>();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllHeaders",

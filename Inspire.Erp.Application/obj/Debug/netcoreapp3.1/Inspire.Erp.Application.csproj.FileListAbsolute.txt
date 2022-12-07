@@ -1,33 +1,18 @@
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.deps.json
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.dll
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.dll
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Infrastructure.dll
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.pdb
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Infrastructure.pdb
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.AssemblyReference.cache
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.AssemblyInfoInputs.cache
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.AssemblyInfo.cs
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.CoreCompileInputs.cache
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.CopyComplete
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.dll
-C:\Users\Awais\Downloads\Inspire.Erp.Web-master\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb
-D:\GIT\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.deps.json
-D:\GIT\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.dll
-D:\GIT\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb
-D:\GIT\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.dll
-D:\GIT\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Infrastructure.dll
-D:\GIT\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.pdb
-D:\GIT\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Infrastructure.pdb
-D:\GIT\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.AssemblyReference.cache
-D:\GIT\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.GeneratedMSBuildEditorConfig.editorconfig
-D:\GIT\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.AssemblyInfoInputs.cache
-D:\GIT\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.AssemblyInfo.cs
-D:\GIT\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.CoreCompileInputs.cache
-D:\GIT\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.CopyComplete
-D:\GIT\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.dll
-D:\GIT\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.deps.json
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.dll
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.dll
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Infrastructure.dll
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.pdb
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Infrastructure.pdb
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.AssemblyReference.cache
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.AssemblyInfoInputs.cache
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.AssemblyInfo.cs
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.CoreCompileInputs.cache
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.CopyComplete
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.dll
+D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb
 D:\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.deps.json
 D:\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.dll
 D:\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb
@@ -43,18 +28,3 @@ D:\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Applic
 D:\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.CopyComplete
 D:\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.dll
 D:\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.deps.json
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.dll
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.dll
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Infrastructure.dll
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.pdb
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\bin\Debug\netcoreapp3.1\Inspire.Erp.Infrastructure.pdb
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.AssemblyReference.cache
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.AssemblyInfoInputs.cache
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.AssemblyInfo.cs
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.CoreCompileInputs.cache
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.csproj.CopyComplete
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.dll
-C:\Users\Mega Providers\Source\Repos\AwaisMalik111\InspireERP\Inspire.Erp.Application\obj\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb

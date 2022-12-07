@@ -8286,24 +8286,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Mega Providers\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Awais\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Mega Providers\\Source\\Repos\\AwaisMalik111\\InspireERP\\Inspire.Erp.Web\\Inspire.Erp.Web.csproj",
+      "projectUniqueName": "D:\\InspireERP\\Inspire.Erp.Web\\Inspire.Erp.Web.csproj",
       "projectName": "Inspire.Erp.Web",
-      "projectPath": "C:\\Users\\Mega Providers\\Source\\Repos\\AwaisMalik111\\InspireERP\\Inspire.Erp.Web\\Inspire.Erp.Web.csproj",
-      "packagesPath": "C:\\Users\\Mega Providers\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Mega Providers\\Source\\Repos\\AwaisMalik111\\InspireERP\\Inspire.Erp.Web\\obj\\",
+      "projectPath": "D:\\InspireERP\\Inspire.Erp.Web\\Inspire.Erp.Web.csproj",
+      "packagesPath": "C:\\Users\\Awais\\.nuget\\packages\\",
+      "outputPath": "D:\\InspireERP\\Inspire.Erp.Web\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Mega Providers\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Awais\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8317,14 +8312,14 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Mega Providers\\Source\\Repos\\AwaisMalik111\\InspireERP\\Inspire.Erp.Application\\Inspire.Erp.Application.csproj": {
-              "projectPath": "C:\\Users\\Mega Providers\\Source\\Repos\\AwaisMalik111\\InspireERP\\Inspire.Erp.Application\\Inspire.Erp.Application.csproj"
+            "D:\\InspireERP\\Inspire.Erp.Application\\Inspire.Erp.Application.csproj": {
+              "projectPath": "D:\\InspireERP\\Inspire.Erp.Application\\Inspire.Erp.Application.csproj"
             },
-            "C:\\Users\\Mega Providers\\Source\\Repos\\AwaisMalik111\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj": {
-              "projectPath": "C:\\Users\\Mega Providers\\Source\\Repos\\AwaisMalik111\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj"
+            "D:\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj": {
+              "projectPath": "D:\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj"
             },
-            "C:\\Users\\Mega Providers\\Source\\Repos\\AwaisMalik111\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\Mega Providers\\Source\\Repos\\AwaisMalik111\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj"
+            "D:\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj": {
+              "projectPath": "D:\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj"
             }
           }
         }
@@ -8362,6 +8357,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[3.1.25, 3.1.25]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -8370,7 +8371,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

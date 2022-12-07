@@ -23,7 +23,7 @@ namespace Inspire.Erp.Domain.Entities
         public string StockRegisterStatus { get; set; }
         public string StockRegisterTransType { get; set; }
         public string StockRegisterRemarks { get; set; }
-        public int? StockRegisterUnit { get; set; }
+        public int StockRegisterUnit { get; set; }
         public int? StockRegisterLocationId { get; set; }
         public int? StockRegisterJobId { get; set; }
         public int? StockRegisterFsno { get; set; }

@@ -2,9 +2,11 @@
 using System.Transactions;
 using Inspire.Erp.Application.Account;
 using Inspire.Erp.Application.Account.Implementations;
+using Inspire.Erp.Application.StoreWareHouse.Implementations;
 using Inspire.Erp.Application.Account.Interfaces;
 using Inspire.Erp.Application.Mapping;
 using Inspire.Erp.Application.Master;
+using Inspire.Erp.Application.StoreWareHouse.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -42,7 +44,7 @@ namespace Inspire.Erp.Application
             services.AddScoped<IPaymentVoucherService, PaymentVoucherService>();
             services.AddScoped<IReceiptVoucherService, ReceiptVoucherService>();
             services.AddScoped<IReceiptVoucherService, ReceiptVoucherService>();
-            services.AddScoped<IStoreWareHouse, StoreWareHouse>();
+            services.AddScoped<IStoreWareHouse, StoreWareHouses>();
             return services;
         }
     }
