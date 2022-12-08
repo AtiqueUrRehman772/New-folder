@@ -1,16 +1,9 @@
 ﻿using AutoMapper;
 using Inspire.Erp.Application.StoreWareHouse.Interfaces;
 using Inspire.Erp.Domain.Entities;
-using Inspire.Erp.Infrastructure.Database.Repositoy;
-using Microsoft.Data.SqlClient;
+using Inspire.Erp.Domain.Modals;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Inspire.Erp.Application.StoreWareHouse.Implementations
@@ -26,9 +19,9 @@ namespace Inspire.Erp.Application.StoreWareHouse.Implementations
         public async Task<dynamic> getStockLedgerReport() {
             try
             {
-                var x = _sr.StockRegister.FirstOrDefault(); ;
-                //var x = await _sr.Set<StockRegister>().FromSqlInterpolated($"EXEC getStockLedgerRpt").ToListAsync();
-                return x;
+                //var response = _sr.StockRegister.FirstOrDefault(); ;
+                var response = await _sr.Set<StockRegisterResponse>().FromSqlInterpolated($"EXEC getStockLedgerRpt").ToListAsync();
+                return response;
             }
             catch (Exception ex)
             {

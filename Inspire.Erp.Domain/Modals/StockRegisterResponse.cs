@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
-namespace Inspire.Erp.Domain.Entities
+namespace Inspire.Erp.Domain.Modals
 {
-    public partial class StockRegister
+    public partial class StockRegisterResponse
     {
         public decimal StockRegisterStoreId { get; set; }
         public string StockRegisterPurchaseId { get; set; }
