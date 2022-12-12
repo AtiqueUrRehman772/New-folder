@@ -282,7 +282,7 @@ export class StockmovementreportComponent implements OnInit {
     this.initializeControlsDtls();
   }
   initializeControlsDtls() {
-    this.stockmovementrptDtls = {
+  this.stockmovementrptDtls = {
       rowHeaders: true,
       viewportColumnRenderingOffset: 27,
       viewportRowRenderingOffset: 'auto',

@@ -129,6 +129,12 @@ D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspi
 D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.dll
 D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.pdb
 D:\InspireERP-main\Inspire-ERP-API\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.genruntimeconfig.cache
+D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.csproj.AssemblyReference.cache
+D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.GeneratedMSBuildEditorConfig.editorconfig
+D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.AssemblyInfoInputs.cache
+D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.AssemblyInfo.cs
+D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.csproj.CoreCompileInputs.cache
+D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.MvcApplicationPartsAssemblyInfo.cache
 D:\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\appsettings.Development.json
 D:\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\appsettings.json
 D:\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\inspiresystems-Client\angular.json
@@ -266,12 +272,6 @@ D:\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\Inspire.Erp.Infrastructure
 D:\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\Inspire.Erp.Application.pdb
 D:\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\Inspire.Erp.Domain.pdb
 D:\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\Inspire.Erp.Infrastructure.pdb
-D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.csproj.AssemblyReference.cache
-D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.GeneratedMSBuildEditorConfig.editorconfig
-D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.AssemblyInfoInputs.cache
-D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.AssemblyInfo.cs
-D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.csproj.CoreCompileInputs.cache
-D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.MvcApplicationPartsAssemblyInfo.cache
 D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\staticwebassets\Inspire.Erp.Web.StaticWebAssets.Manifest.cache
 D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.RazorTargetAssemblyInfo.cache
 D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.csproj.CopyComplete

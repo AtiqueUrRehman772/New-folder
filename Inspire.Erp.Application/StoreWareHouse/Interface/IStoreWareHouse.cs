@@ -10,17 +10,17 @@ namespace Inspire.Erp.Application.StoreWareHouse.Interfaces
     public interface IStoreWareHouse
     {
         public Task<dynamic> getStockLedgerReport();
-        //public Task<string> getStockMovementRpt();
-        //public Task<string> getAllItems();
-        //public Task<string> getAllBrands();
-        //public Task<string> getFilteredStockLedgerRpt(StockLedgerReportModel obj);
-        //public Task<string> getStockMovementDetailsRpt(ItemMasterViewModel id);
-        //public Task<string> getItemDetailsById(ItemMasterViewModel id);
-        //public Task<string> getDetailsByItem(StockLedgerReportModel obj);
-        //public Task<string> getStockVchDetails(StockLedgerReportModel obj);
-        //public Task<string> getAllDepartments();
-        //public Task<string> getVoucherNumber();
-        //public Task<string> submitTransferReport(StockTransferRequestModel obj);
-        //public Task<string> submitDamageEntry(StockTransferRequestModel obj);
+        public Task<dynamic> getStockMovementRpt();
+        public Task<dynamic> getAllItems();
+      //  public Task<dynamic> getAllBrands();
+        public Task<dynamic> getFilteredStockLedgerRpt(StockLedgerReportModel obj);
+        public Task<dynamic> getStockMovementDetailsRpt(ItemMasterViewModel id);
+        public Task<dynamic> getItemDetailsById(ItemMasterViewModel id);
+        public Task<dynamic> getDetailsByItem(StockLedgerReportModel obj);
+        public Task<dynamic> getStockVchDetails(StockLedgerReportModel obj);
+        public Task<dynamic> getAllDepartments();
+        public Task<dynamic> getVoucherNumber();
+        public Task<dynamic> submitTransferReport(StockTransferRequestModel obj);
+        public Task<dynamic> submitDamageEntry(StockTransferRequestModel obj);
     }
 }

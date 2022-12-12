@@ -39,7 +39,7 @@ namespace Inspire.Erp.Web
             services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddDbContext<InspireErpDBContext>(options =>
-           options.UseSqlServer(Configuration.GetConnectionString("db_con")));
+           options.UseSqlServer(Configuration["ApplicationSettings:ConnectionString"]));
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {

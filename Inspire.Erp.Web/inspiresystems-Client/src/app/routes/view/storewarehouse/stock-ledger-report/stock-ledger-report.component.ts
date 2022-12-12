@@ -190,7 +190,7 @@ export class StockLedgerReportComponent implements OnInit {
     this.stockApi.getStockLedgerReport().subscribe(
       data => {
         this.response = data;
-        this.dataset = this.response.Stock_Register;
+        this.dataset = this.response;
         this.gridHeader = "Showing All Data";
       }, (error) => {
         console.log(error);

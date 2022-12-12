@@ -1,19 +1,7 @@
-﻿using Inspire.Erp.Application.Account.Interfaces;
-using Inspire.Erp.Application.StoreWareHouse.Interfaces;
-using Inspire.Erp.Domain.Entities;
-using Inspire.Erp.Infrastructure.Database;
-using Inspire.Erp.Web.ViewModels;
-using Microsoft.AspNetCore.Http;
+﻿using Inspire.Erp.Application.StoreWareHouse.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
 using static Inspire.Erp.Domain.Entities.StoreWareHouse;
-using ItemMasterViewModel = Inspire.Erp.Domain.Entities.StoreWareHouse.ItemMasterViewModel;
 
 namespace Inspire.Erp.Web.Controllers
 {
@@ -40,12 +28,26 @@ namespace Inspire.Erp.Web.Controllers
                 throw;
             }
         }
+        [HttpGet("getStockMovementRpt")]
+        public async Task<dynamic> getStockMovementRpt()
+        {
+            try
+            {
+                var response = await _sw.getStockMovementRpt();
+                return response;
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
         //[HttpPost("getFilteredStockLedgerRpt")]
-        //public async Task<string> getFilteredStockLedgerRpt([FromBody] StockLedgerReportModel obj)
+        //public async Task<dynamic> getFilteredStockLedgerRpt([FromBody] StockLedgerReportModel obj)
         //{
         //    try
         //    {
-        //        string response = await _sw.getFilteredStockLedgerRpt(obj);
+        //        var response = await _sw.getFilteredStockLedgerRpt(obj);
         //        return response;
         //    }
         //    catch (System.Exception)
@@ -53,25 +55,13 @@ namespace Inspire.Erp.Web.Controllers
         //        throw;
         //    }
         //}
-        //[HttpGet("getStockMovementRpt")]
-        //public async Task<string> getStockMovementRpt()
-        //{
-        //    try
-        //    {
-        //        string response = await _sw.getStockMovementRpt();
-        //        return response;
-        //    }
-        //    catch (System.Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
+
         //[HttpPost("getStockMovementDetailsRpt")]
-        //public async Task<string> getStockMovementDetailsRpt([FromBody] ItemMasterViewModel id)
+        //public async Task<dynamic> getStockMovementDetailsRpt([FromBody] ItemMasterViewModel id)
         //{
         //    try
         //    {
-        //        string response = await _sw.getStockMovementDetailsRpt(id);
+        //        var response = await _sw.getStockMovementDetailsRpt(id);
         //        return response;
         //    }
         //    catch (System.Exception)
@@ -79,12 +69,13 @@ namespace Inspire.Erp.Web.Controllers
         //        throw;
         //    }
         //}
+
         //[HttpPost("getItemDetailsById")]
-        //public async Task<string> getItemDetailsById([FromBody] ItemMasterViewModel id)
+        //public async Task<dynamic> getItemDetailsById([FromBody] ItemMasterViewModel id)
         //{
         //    try
         //    {
-        //        string response = await _sw.getItemDetailsById(id);
+        //        var response = await _sw.getItemDetailsById(id);
         //        return response;
         //    }
         //    catch (System.Exception)
@@ -92,12 +83,13 @@ namespace Inspire.Erp.Web.Controllers
         //        throw;
         //    }
         //}
+
         //[HttpPost("getDetailsByItem")]
-        //public async Task<string> getDetailsByItem([FromBody] StockLedgerReportModel obj)
+        //public async Task<dynamic> getDetailsByItem([FromBody] StockLedgerReportModel obj)
         //{
         //    try
         //    {
-        //        string response = await _sw.getDetailsByItem(obj);
+        //        var response = await _sw.getDetailsByItem(obj);
         //        return response;
         //    }
         //    catch (System.Exception)
@@ -105,39 +97,42 @@ namespace Inspire.Erp.Web.Controllers
         //        throw;
         //    }
         //}
-        //[HttpPost("getStockVchDetails")]
-        //public async Task<string> getStockVchDetails([FromBody] StockLedgerReportModel obj)
-        //{
-        //    try
-        //    {
-        //        string response = await _sw.getStockVchDetails(obj);
-        //        return response;
-        //    }
-        //    catch (System.Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-        //[HttpGet("getAllItems")]
-        //public async Task<string> getAllItems()
-        //{
-        //    try
-        //    {
-        //        string response = await _sw.getAllItems();
-        //        return response;
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-        //        return ex.Message.ToString();
-        //        throw;
-        //    }
-        //}
+
+        [HttpPost("getStockVchDetails")]
+        public async Task<dynamic> getStockVchDetails([FromBody] StockLedgerReportModel obj)
+        {
+            try
+            {
+                var response = await _sw.getStockVchDetails(obj);
+                return response;
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("getAllItems")]
+        public async Task<dynamic> getAllItems()
+        {
+            try
+            {
+                var response = await _sw.getAllItems();
+                return response;
+            }
+            catch (System.Exception ex)
+            {
+                return ex.Message.ToString();
+                throw;
+            }
+        }
+
         //[HttpGet("getAllBrands")]
-        //public async Task<string> getAllBrands()
+        //public async Task<dynamic> getAllBrands()
         //{
         //    try
         //    {
-        //        string response = await _sw.getAllBrands();
+        //        var response = await _sw.getAllBrands();
         //        return response;
         //    }
         //    catch (System.Exception ex)
@@ -146,36 +141,39 @@ namespace Inspire.Erp.Web.Controllers
         //        throw;
         //    }
         //}
-        //[HttpGet("getAllDepartments")]
-        //public async Task<string> getAllDepartments()
-        //{
-        //    try
-        //    {
-        //        string response = await _sw.getAllDepartments();
-        //        return response;
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-        //        return ex.Message.ToString();
-        //        throw;
-        //    }
-        //}
-        //[HttpGet("getVoucherNumber")]
-        //public async Task<string> getVoucherNumber()
-        //{
-        //    try
-        //    {
-        //        string response = await _sw.getVoucherNumber();
-        //        return response;
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-        //        return ex.Message.ToString();
-        //        throw;
-        //    }
-        //}
+
+        [HttpGet("getAllDepartments")]
+        public async Task<dynamic> getAllDepartments()
+        {
+            try
+            {
+                var response = await _sw.getAllDepartments();
+                return response;
+            }
+            catch (System.Exception ex)
+            {
+                return ex.Message.ToString();
+                throw;
+            }
+        }
+
+        [HttpGet("getVoucherNumber")]
+        public async Task<dynamic> getVoucherNumber()
+        {
+            try
+            {
+                var response = await _sw.getVoucherNumber();
+                return response;
+            }
+            catch (System.Exception ex)
+            {
+                return ex.Message.ToString();
+                throw;
+            }
+        }
+
         //[HttpPost("submitTransferReport")]
-        //public async Task<string> submitTransferReport(StockTransferRequestModel obj)
+        //public async Task<dynamic> submitTransferReport(StockTransferRequestModel obj)
         //{
         //    try
         //    {
@@ -188,8 +186,9 @@ namespace Inspire.Erp.Web.Controllers
         //        throw;
         //    }
         //}
+
         //[HttpPost("submitDamageEntry")]
-        //public async Task<string> submitDamageEntry(StockTransferRequestModel obj)
+        //public async Task<dynamic> submitDamageEntry(StockTransferRequestModel obj)
         //{
         //    try
         //    {
