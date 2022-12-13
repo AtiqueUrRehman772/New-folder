@@ -297,7 +297,7 @@ export class AppMenuComponent implements OnInit {
         label: 'Procurement', icon: 'fa fa-fw fa-book',
         items: [
           { label: 'Purchase Return', icon: 'fa fa-fw fa-gear', routerLink: ['/documentation'] },
-          { label: 'Purchase Order', icon: 'fa fa-fw fa-wrench', routerLink: ['/utils'] },
+          { label: 'Purchase Order', icon: 'fa fa-fw fa-wrench', routerLink: ['/procurement/PurchaseOrder'] },
           { label: 'General Purchase Order', icon: 'fa fa-fw fa-gear', routerLink: ['/documentation'] },
           { label: 'RFQ', icon: 'fa fa-fw fa-wrench', routerLink: ['/utils'] },
           { label: 'Purchase Requisition', icon: 'fa fa-fw fa-gear', routerLink: ['/documentation'] },

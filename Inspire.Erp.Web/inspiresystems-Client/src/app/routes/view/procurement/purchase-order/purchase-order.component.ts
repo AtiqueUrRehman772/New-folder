@@ -4,15 +4,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MasterApiService } from 'src/app/routes/service/master.api.services';
 import { CurrencyMaster } from 'src/app/routes/domain';
 import { MenuItem } from 'primeng/api/menuitem';
-import { DropdownModule } from 'primeng/dropdown';
+import {DropdownModule} from 'primeng/dropdown';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-stock-ledger',
-  templateUrl: './stock-ledger.component.html',
-  styleUrls: ['./stock-ledger.component.scss']
+  selector: 'app-purchase-order',
+  templateUrl: './purchase-order.component.html',
+  styleUrls: ['./purchase-order.component.scss']
 })
-export class StockLedgerComponent implements OnInit {
+export class PurchaseOrderComponent implements OnInit {
+
   constructor(private activatedroute: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
