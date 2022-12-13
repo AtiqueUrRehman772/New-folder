@@ -2,6 +2,7 @@ import { CustomerquotationComponent } from './customerquotation/customerquotatio
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SalesVoucherComponent } from './sales-voucher/sales-voucher.component';
+import { CustomerEnquirySearchComponent } from './customer-enquiry-search/customer-enquiry-search.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,11 @@ const routes: Routes = [
     path: 'salesvoucher',
     component: SalesVoucherComponent,
     data: { title: 'Sales Voucher', titleI18n: 'Sales Voucher' }
+  },
+  {
+    path: 'customer-enquiry-search',
+    component: CustomerEnquirySearchComponent,
+    data: { title: 'Cusotmer Enquiry Search', titleI18n: 'Cusotmer Enquiry Search' }
   }
 
 ];

@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj": {}
+    "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj": {
+    "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj",
         "projectName": "Inspire.Erp.Domain",
-        "projectPath": "D:\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj",
-        "packagesPath": "C:\\Users\\Awais\\.nuget\\packages\\",
-        "outputPath": "D:\\InspireERP\\Inspire.Erp.Domain\\obj\\",
+        "projectPath": "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj",
+        "packagesPath": "C:\\Users\\Mega Providers\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Awais\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mega Providers\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -70,21 +74,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj": {
+    "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj",
         "projectName": "Inspire.Erp.Infrastructure",
-        "projectPath": "D:\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Awais\\.nuget\\packages\\",
-        "outputPath": "D:\\InspireERP\\Inspire.Erp.Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Infrastructure\\Inspire.Erp.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Mega Providers\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Awais\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mega Providers\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -98,8 +106,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj": {
-                "projectPath": "D:\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj"
+              "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj": {
+                "projectPath": "C:\\Users\\Mega Providers\\Documents\\GitHub\\InspireERP\\Inspire.Erp.Domain\\Inspire.Erp.Domain.csproj"
               }
             }
           }
@@ -138,7 +146,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

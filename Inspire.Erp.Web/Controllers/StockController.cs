@@ -171,6 +171,20 @@ namespace Inspire.Erp.Web.Controllers
                 throw;
             }
         }
+        [HttpGet("customerEnquiryReport")]
+        public async Task<dynamic> customerEnquiryReport()
+        {
+            try
+            {
+                var response = await _sw.customerEnquiryReport();
+                return response;
+            }
+            catch (System.Exception ex)
+            {
+                return ex.Message.ToString();
+                throw;
+            }
+        }
 
         //[HttpPost("submitTransferReport")]
         //public async Task<dynamic> submitTransferReport(StockTransferRequestModel obj)

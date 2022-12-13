@@ -33,4 +33,7 @@ export class StockApiService {
   getAllDepartments(){
     return this.http.get('http://localhost:53447/api/Stock/getAllDepartments');
   }
+  customerEnquiryReport(){
+    return this.http.get('http://localhost:53447/api/Stock/customerEnquiryReport');
+  }
 }

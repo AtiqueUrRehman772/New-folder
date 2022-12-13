@@ -22,5 +22,6 @@ namespace Inspire.Erp.Application.StoreWareHouse.Interfaces
         public Task<dynamic> getVoucherNumber();
         public Task<dynamic> submitTransferReport(StockTransferRequestModel obj);
         public Task<dynamic> submitDamageEntry(StockTransferRequestModel obj);
+        public Task<dynamic> customerEnquiryReport();
     }
 }

@@ -10,10 +10,11 @@ import { CustomerquotationComponent } from './customerquotation/customerquotatio
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HotTableModule } from '@handsontable/angular';
 import { SalesVoucherComponent } from './sales-voucher/sales-voucher.component';
+import { CustomerEnquirySearchComponent } from './customer-enquiry-search/customer-enquiry-search.component';
 
 
 @NgModule({
-  declarations: [CustomerquotationComponent, SalesVoucherComponent],
+  declarations: [CustomerquotationComponent, SalesVoucherComponent, CustomerEnquirySearchComponent],
   imports: [
     CommonModule,
     SaleRoutingModule,

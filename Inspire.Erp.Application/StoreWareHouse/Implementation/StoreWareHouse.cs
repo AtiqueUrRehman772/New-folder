@@ -4,7 +4,9 @@ using Inspire.Erp.Domain.Entities;
 using Inspire.Erp.Domain.Modals;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
+using System.Data;
 using System.Threading.Tasks;
 using static Inspire.Erp.Domain.Entities.StoreWareHouse;
 
@@ -177,6 +179,35 @@ namespace Inspire.Erp.Application.StoreWareHouse.Implementations
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+        public async Task<dynamic> customerEnquiryReport()
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=ATIQUEURREHMAN\\SQLEXPRESS;Initial Catalog=InspireERPDB;Integrated Security=True"))
+                {
+                    string query = "CustomerEnquiryReport";
+                    using (SqlCommand com = new SqlCommand(query, con))
+                    {
+                        con.Open();
+                        com.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataAdapter customerDA = new SqlDataAdapter())
+                        {
+                            customerDA.SelectCommand = com;
+                            using (DataSet customerDS = new DataSet())
+                            {
+                                customerDA.Fill(customerDS, "Enquiry_Master");
+                                con.Close();
+                                return JsonConvert.SerializeObject(customerDS);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
