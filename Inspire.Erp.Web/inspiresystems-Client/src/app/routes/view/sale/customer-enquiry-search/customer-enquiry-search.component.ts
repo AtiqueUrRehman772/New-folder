@@ -33,7 +33,7 @@ export class CustomerEnquirySearchComponent implements OnInit {
       this.title = data.title;
       });
       this.initializeControls();
-      this.getcustomerEnquiryReport();
+      //this.getcustomerEnquiryReport();
   }
 
   initializeControls() {

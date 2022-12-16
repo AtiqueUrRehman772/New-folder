@@ -34,7 +34,8 @@
                 <label class="p-col-1 p-md-1" for="itemGroup">{{'Item Group'| translate}}</label>
                 <div class="p-col-2 p-md-2">
                     <div style="display: inline-block;" class="ui-inputgroup">
-                        <input pInputText formControlName='ItemGroup' #itemGroup id="itemGroup" [(ngModel)]="selectedItem.Item_Master_Item_ID">
+                        <input pInputText formControlName='ItemGroup' #itemGroup id="itemGroup"
+                            [(ngModel)]="selectedItem.Item_Master_Item_ID">
                         <button pButton type="button" (click)="showItemGroups()" icon="pi pi-search"></button>
                     </div>
                     <div class="error" *ngIf="f.ItemGroup.touched && f.ItemGroup.invalid">
@@ -72,7 +73,8 @@
                 <label class="p-col-6 p-md-12 p-lg-1" for="itemName">{{'Item' | translate}}</label>
                 <div class="p-col-6 p-md-12 p-lg-2 p-1">
                     <div style="display: inline-block;" class="ui-inputgroup">
-                        <input pInputText formControlName="ItemName" id="itemName" [(ngModel)]="selectedItem.Item_Master_Item_Name">
+                        <input pInputText formControlName="ItemName" id="itemName"
+                            [(ngModel)]="selectedItem.Item_Master_Item_Name">
                         <button pButton type="button" icon="pi pi-search" (click)="showItems()"></button>
                     </div>
                     <div class="error" *ngIf="f.ItemName.touched && f.ItemName.invalid">
@@ -139,17 +141,17 @@
         <div class="grid">
             <hot-table [hotId]="hotid" height="auto" [data]="dataset" [licenseKey]="licensekey"
                 [settings]="stockLedgerReport">
-                <hot-column data="Item_Id" [readOnly]="true" title="Item Id"></hot-column>
-                <hot-column data="Item_Name" title="Item name"></hot-column>
-                <hot-column data="Stock_Register_Unit_ID" title="Unit Id"></hot-column>
-                <hot-column data="OpenQty" title="Opening Qty"></hot-column>
-                <hot-column data="OpenQtyAmount" title="Opening Amount"></hot-column>
-                <hot-column data="StockIn" title="Stock In Qty"></hot-column>
-                <hot-column data="StockInAmount" title="Stock In Amount"></hot-column>
-                <hot-column data="StockOut" title="Stock Out Qty"></hot-column>
-                <hot-column data="StockOutAmount" title="Stock Out Amount"></hot-column>
-                <hot-column data="TotalBal" title="Balance Qty"></hot-column>
-                <hot-column data="TotalBalAmount" title="Balance Amount"></hot-column>
+                <hot-column data="item_Id" [readOnly]="true" title="Item Id"></hot-column>
+                <hot-column data="item_Name" title="Item name"></hot-column>
+                <hot-column data="stock_Register_Unit_ID" title="Unit Id"></hot-column>
+                <hot-column data="openQty" title="Opening Qty"></hot-column>
+                <hot-column data="openQtyAmount" title="Opening Amount"></hot-column>
+                <hot-column data="stockIn" title="Stock In Qty"></hot-column>
+                <hot-column data="stockInAmount" title="Stock In Amount"></hot-column>
+                <hot-column data="stockOut" title="Stock Out Qty"></hot-column>
+                <hot-column data="stockOutAmount" title="Stock Out Amount"></hot-column>
+                <hot-column data="totalBal" title="Balance Qty"></hot-column>
+                <hot-column data="totalBalAmount" title="Balance Amount"></hot-column>
             </hot-table>
         </div>
     </p-panel>
@@ -176,8 +178,8 @@
         </div>
     </div>
 </p-dialog>
-<p-dialog header="Locations" [(visible)]="showLocationList" [modal]="true" [style]="{width: '25%'}"
-    [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<p-dialog header="Locations" [(visible)]="showLocationList" [modal]="true" [style]="{width: '25%'}" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
     <p-toolbar>
         <div class="ui-toolbar-group-left">
             <button pButton type="button" label="Show" icon="fa fa-search" class="ui-button-success"></button>
@@ -192,14 +194,16 @@
                 placeholder="Type to Search" />
         </div>
         <div class="card">
-            <span *ngFor="let item of locationList" (click)="toggleActiveLoc(item.locationMasterLocationId,item.locationMasterLocationName)">
-                <div class="customListHover" id="{{item.locationMasterLocationId}}"><label>{{item.locationMasterLocationName}}</label></div>
+            <span *ngFor="let item of locationList"
+                (click)="toggleActiveLoc(item.locationMasterLocationId,item.locationMasterLocationName)">
+                <div class="customListHover" id="{{item.locationMasterLocationId}}">
+                    <label>{{item.locationMasterLocationName}}</label></div>
             </span>
         </div>
     </div>
 </p-dialog>
-<p-dialog header="Locations" [(visible)]="showJobList" [modal]="true" [style]="{width: '40%'}"
-    [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<p-dialog header="Locations" [(visible)]="showJobList" [modal]="true" [style]="{width: '40%'}" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
     <p-toolbar>
         <div class="ui-toolbar-group-left">
             <button pButton type="button" label="Show" icon="fa fa-search" class="ui-button-success"></button>
@@ -227,15 +231,16 @@
 
             <ng-template pTemplate="body" let-item>
                 <tr>
-                    <td [style]="{'cursor':'pointer'}" (click)="selectJob(item.jobMasterJobName)">{{item.jobMasterJobName}}</td>
+                    <td [style]="{'cursor':'pointer'}" (click)="selectJob(item.jobMasterJobName)">
+                        {{item.jobMasterJobName}}</td>
                     <td>{{item.jobMasterJobNumber}}</td>
                 </tr>
             </ng-template>
         </p-table>
     </div>
 </p-dialog>
-<p-dialog header="Locations" [(visible)]="showBrandList" [modal]="true" [style]="{width: '40%'}"
-    [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<p-dialog header="Locations" [(visible)]="showBrandList" [modal]="true" [style]="{width: '40%'}" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
     <p-toolbar>
         <div class="ui-toolbar-group-left">
             <button pButton type="button" label="Show" icon="fa fa-search" class="ui-button-success"></button>
@@ -295,17 +300,14 @@
                     </th>
                 </tr>
             </ng-template>
-<!-- (click)="getDetailsByItem(item.Item_Master_Item_ID)" -->
             <ng-template pTemplate="body" let-item>
                 <tr>
-                    <td>{{item.Item_Master_Item_ID}}</td>
-                    <td [style]="{'cursor':'pointer'}"
-
-                     (click)="selectItem(item)">
-                     {{item.Item_Master_Item_Name}}</td>
-                    <td>{{item.Item_Master_Barcode}}</td>
-                    <td>{{item.Item_Master_Part_No}}</td>
-                    <td>{{item.Stock}}</td>
+                    <td>{{item.item_Master_Item_ID}}</td>
+                    <td [style]="{'cursor':'pointer'}" (click)="selectItem(item)">
+                        {{item.item_Master_Item_Name}}</td>
+                    <td>{{item.item_Master_Barcode}}</td>
+                    <td>{{item.item_Master_Part_No}}</td>
+                    <td>{{item.stock}}</td>
                 </tr>
             </ng-template>
         </p-table>

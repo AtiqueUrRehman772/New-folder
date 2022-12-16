@@ -279,9 +279,8 @@ D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.dll
 D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.pdb
 D:\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.genruntimeconfig.cache
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.csproj.AssemblyReference.cache
-C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.dll
-C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.pdb
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\inspiresystems-Client\angular.json
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\inspiresystems-Client\e2e\tsconfig.json
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\inspiresystems-Client\package-lock.json
@@ -300,7 +299,6 @@ C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\ne
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\inspiresystems-Client\tsconfig.json
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\inspiresystems-Client\tsconfig.spec.json
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\inspiresystems-Client\tslint.json
-C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\Inspire.Erp.Web.exe
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\Inspire.Erp.Web.deps.json
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\bin\Debug\netcoreapp3.1\Inspire.Erp.Web.runtimeconfig.json
@@ -426,4 +424,6 @@ C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\obj\Debug\ne
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\staticwebassets\Inspire.Erp.Web.StaticWebAssets.Manifest.cache
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.RazorTargetAssemblyInfo.cache
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.csproj.CopyComplete
+C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.dll
+C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.pdb
 C:\Users\Mega Providers\Documents\GitHub\InspireERP\Inspire.Erp.Web\obj\Debug\netcoreapp3.1\Inspire.Erp.Web.genruntimeconfig.cache

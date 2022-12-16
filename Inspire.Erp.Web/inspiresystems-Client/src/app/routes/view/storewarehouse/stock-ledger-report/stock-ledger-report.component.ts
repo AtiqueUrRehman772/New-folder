@@ -90,7 +90,6 @@ export class StockLedgerReportComponent implements OnInit {
   cols: Array<any>;
   jobCols: Array<any>;
   brandCols: Array<any>;
-  tempResponse: any;
   datedFrom: any;
   datedTo: any;
   selectedLocation:any;
@@ -121,11 +120,11 @@ export class StockLedgerReportComponent implements OnInit {
       DateType: new FormControl('Monthly', Validators.required)
     });
     this.cols = [
-      { field: "Item_Master_Item_ID", header: "Item Code" },
-      { field: "Item_Master_Item_Name", header: "Item Name" },
-      { field: "Item_Master_Bar_Code", header: "Bar Code" },
-      { field: "Item_Master_Part_No", header: "Part No." },
-      { field: "Item_Master_Stock", header: "Stock" },
+      { field: "item_Master_Item_ID", header: "Item Code" },
+      { field: "item_Master_Item_Name", header: "Item Name" },
+      { field: "item_Master_Bar_Code", header: "Bar Code" },
+      { field: "item_Master_Part_No", header: "Part No." },
+      { field: "item_Master_Stock", header: "Stock" },
     ];
     this.jobCols = [
       { field: "Name", header: "Job Name" },
@@ -149,8 +148,8 @@ export class StockLedgerReportComponent implements OnInit {
   showItems() {
     this.stockApi.getAllItemsList().subscribe(
       data => {
-        this.tempResponse = data;
-        this.itemList = this.tempResponse.Item_Master;
+        this.itemList = data;
+        console.log(this.itemList);
       }
     );
     this.showItemList = true;
@@ -185,6 +184,7 @@ export class StockLedgerReportComponent implements OnInit {
     this.ItemFormGroup.controls['DetailsType'].setValue('');
     this.ItemFormGroup.controls['DateType'].setValue('');
   }
+  //done
   getStockLedgerRpt() {
     this.btnFlag = { edit: false, cancel: false, save: false, new: false, delete: false, list: false };
     this.stockApi.getStockLedgerReport().subscribe(
@@ -251,6 +251,7 @@ export class StockLedgerReportComponent implements OnInit {
       }
     );
   }
+  // Not clear
   getAllBrands() {
     this.masterApi.GetAllBrand().subscribe(
       data => {
